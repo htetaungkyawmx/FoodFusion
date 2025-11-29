@@ -1,23 +1,10 @@
 <?php
 /**
- * General Utility Functions for FoodFusion
- * Provides common functions used throughout the application
+ * Enhanced Utility Functions for FoodFusion
  */
 
 /**
- * Redirect to specified URL
- * @param string $url URL to redirect to
- * @param int $status_code HTTP status code for redirect
- */
-function redirect($url, $status_code = 302) {
-    header("Location: $url", true, $status_code);
-    exit;
-}
-
-/**
- * Set flash message for next request
- * @param string $type Message type (success, error, warning, info)
- * @param string $message Message content
+ * Set flash message
  */
 function setFlashMessage($type, $message) {
     if (session_status() == PHP_SESSION_NONE) {
@@ -27,8 +14,7 @@ function setFlashMessage($type, $message) {
 }
 
 /**
- * Get and clear flash messages
- * @return array Array of flash messages
+ * Get flash messages
  */
 function getFlashMessages() {
     if (session_status() == PHP_SESSION_NONE) {
@@ -42,7 +28,6 @@ function getFlashMessages() {
 
 /**
  * Display flash messages
- * @param string $type Specific message type to display (optional)
  */
 function displayFlashMessages($type = null) {
     $messages = getFlashMessages();
@@ -67,9 +52,7 @@ function displayFlashMessages($type = null) {
 }
 
 /**
- * Validate email address
- * @param string $email Email to validate
- * @return bool True if email is valid, false otherwise
+ * Validate email
  */
 function isValidEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
@@ -77,18 +60,21 @@ function isValidEmail($email) {
 
 /**
  * Validate password strength
- * @param string $password Password to validate
- * @param int $min_length Minimum password length
- * @return bool True if password meets requirements, false otherwise
  */
 function isPasswordStrong($password, $min_length = 6) {
     return strlen($password) >= $min_length;
 }
 
 /**
+ * Redirect to URL
+ */
+function redirect($url, $status_code = 302) {
+    header("Location: $url", true, $status_code);
+    exit;
+}
+
+/**
  * Generate random string
- * @param int $length Length of random string
- * @return string Random string
  */
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -103,10 +89,7 @@ function generateRandomString($length = 10) {
 }
 
 /**
- * Format date for display
- * @param string $date_string Date string
- * @param string $format Date format
- * @return string Formatted date
+ * Format date
  */
 function formatDate($date_string, $format = 'F j, Y') {
     $date = new DateTime($date_string);
@@ -114,11 +97,7 @@ function formatDate($date_string, $format = 'F j, Y') {
 }
 
 /**
- * Truncate text to specified length
- * @param string $text Text to truncate
- * @param int $length Maximum length
- * @param string $suffix Suffix to add if truncated
- * @return string Truncated text
+ * Truncate text
  */
 function truncateText($text, $length = 100, $suffix = '...') {
     if (strlen($text) <= $length) {
@@ -136,8 +115,7 @@ function truncateText($text, $length = 100, $suffix = '...') {
 }
 
 /**
- * Get client IP address
- * @return string Client IP address
+ * Get client IP
  */
 function getClientIP() {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -150,35 +128,7 @@ function getClientIP() {
 }
 
 /**
- * Log activity to file
- * @param string $activity Activity description
- * @param string $user_id User ID (optional)
- */
-function logActivity($activity, $user_id = null) {
-    $log_file = __DIR__ . '/../logs/activity.log';
-    $log_dir = dirname($log_file);
-    
-    // Create logs directory if it doesn't exist
-    if (!is_dir($log_dir)) {
-        mkdir($log_dir, 0755, true);
-    }
-    
-    $timestamp = date('Y-m-d H:i:s');
-    $ip = getClientIP();
-    $user_info = $user_id ? "User: $user_id" : "Guest";
-    
-    $log_entry = "[$timestamp] [$ip] [$user_info] $activity" . PHP_EOL;
-    
-    file_put_contents($log_file, $log_entry, FILE_APPEND | LOCK_EX);
-}
-
-/**
  * Upload file with validation
- * @param array $file $_FILES array element
- * @param string $upload_dir Upload directory
- * @param array $allowed_types Allowed file types
- * @param int $max_size Maximum file size in bytes
- * @return array Result with 'success' boolean and 'message' or 'file_path'
  */
 function uploadFile($file, $upload_dir, $allowed_types = ['jpg', 'jpeg', 'png', 'gif'], $max_size = 2097152) {
     $result = ['success' => false, 'message' => ''];
@@ -215,6 +165,7 @@ function uploadFile($file, $upload_dir, $allowed_types = ['jpg', 'jpeg', 'png', 
     if (move_uploaded_file($file['tmp_name'], $file_path)) {
         $result['success'] = true;
         $result['file_path'] = $file_path;
+        $result['filename'] = $filename;
         $result['message'] = 'File uploaded successfully';
     } else {
         $result['message'] = 'Failed to move uploaded file';
@@ -224,27 +175,7 @@ function uploadFile($file, $upload_dir, $allowed_types = ['jpg', 'jpeg', 'png', 
 }
 
 /**
- * Send email
- * @param string $to Recipient email
- * @param string $subject Email subject
- * @param string $body Email body
- * @param string $from Sender email
- * @return bool True if email sent successfully, false otherwise
- */
-function sendEmail($to, $subject, $body, $from = 'noreply@foodfusion.com') {
-    $headers = "From: $from\r\n";
-    $headers .= "Reply-To: $from\r\n";
-    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    
-    return mail($to, $subject, $body, $headers);
-}
-
-/**
  * Get pagination parameters
- * @param int $total_items Total number of items
- * @param int $current_page Current page number
- * @param int $items_per_page Number of items per page
- * @return array Pagination data
  */
 function getPagination($total_items, $current_page = 1, $items_per_page = 10) {
     $total_pages = ceil($total_items / $items_per_page);
@@ -264,9 +195,6 @@ function getPagination($total_items, $current_page = 1, $items_per_page = 10) {
 
 /**
  * Generate pagination HTML
- * @param array $pagination Pagination data from getPagination()
- * @param string $base_url Base URL for pagination links
- * @return string Pagination HTML
  */
 function generatePagination($pagination, $base_url) {
     if ($pagination['total_pages'] <= 1) {
@@ -277,11 +205,14 @@ function generatePagination($pagination, $base_url) {
     
     // Previous link
     if ($pagination['has_previous']) {
-        $html .= '<a href="' . $base_url . '?page=' . ($pagination['current_page'] - 1) . '" class="page-link prev">Previous</a>';
+        $html .= '<a href="' . $base_url . '?page=' . ($pagination['current_page'] - 1) . '" class="page-link prev"><i class="fas fa-chevron-left"></i> Previous</a>';
     }
     
     // Page links
-    for ($i = 1; $i <= $pagination['total_pages']; $i++) {
+    $start_page = max(1, $pagination['current_page'] - 2);
+    $end_page = min($pagination['total_pages'], $pagination['current_page'] + 2);
+    
+    for ($i = $start_page; $i <= $end_page; $i++) {
         if ($i == $pagination['current_page']) {
             $html .= '<span class="page-link current">' . $i . '</span>';
         } else {
@@ -291,7 +222,7 @@ function generatePagination($pagination, $base_url) {
     
     // Next link
     if ($pagination['has_next']) {
-        $html .= '<a href="' . $base_url . '?page=' . ($pagination['current_page'] + 1) . '" class="page-link next">Next</a>';
+        $html .= '<a href="' . $base_url . '?page=' . ($pagination['current_page'] + 1) . '" class="page-link next">Next <i class="fas fa-chevron-right"></i></a>';
     }
     
     $html .= '</div>';
@@ -299,21 +230,7 @@ function generatePagination($pagination, $base_url) {
 }
 
 /**
- * Escape string for database query
- * @param string $string String to escape
- * @return string Escaped string
- */
-function escapeString($string) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
-    
-    return $db->quote($string);
-}
-
-/**
  * Get database connection
- * @return PDO Database connection
  */
 function getDBConnection() {
     include 'config/database.php';
@@ -323,7 +240,6 @@ function getDBConnection() {
 
 /**
  * Check if request is AJAX
- * @return bool True if AJAX request, false otherwise
  */
 function isAjaxRequest() {
     return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
@@ -332,8 +248,6 @@ function isAjaxRequest() {
 
 /**
  * JSON response helper
- * @param array $data Data to encode as JSON
- * @param int $status_code HTTP status code
  */
 function jsonResponse($data, $status_code = 200) {
     http_response_code($status_code);
@@ -343,20 +257,7 @@ function jsonResponse($data, $status_code = 200) {
 }
 
 /**
- * Get current URL
- * @return string Current URL
- */
-function getCurrentUrl() {
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
-    $uri = $_SERVER['REQUEST_URI'];
-    return $protocol . '://' . $host . $uri;
-}
-
-/**
  * Generate SEO-friendly slug
- * @param string $string String to convert to slug
- * @return string SEO-friendly slug
  */
 function generateSlug($string) {
     $slug = strtolower(trim($string));
@@ -368,15 +269,13 @@ function generateSlug($string) {
 
 /**
  * Calculate recipe rating
- * @param int $recipe_id Recipe ID
- * @return array Rating data
  */
 function calculateRecipeRating($recipe_id) {
     $db = getDBConnection();
     
     $query = "SELECT AVG(rating) as average_rating, COUNT(*) as total_ratings 
-              FROM recipe_ratings 
-              WHERE recipe_id = ?";
+              FROM recipe_reviews 
+              WHERE recipe_id = ? AND rating IS NOT NULL";
     $stmt = $db->prepare($query);
     $stmt->execute([$recipe_id]);
     
@@ -386,5 +285,72 @@ function calculateRecipeRating($recipe_id) {
         'average' => $result['average_rating'] ? round($result['average_rating'], 1) : 0,
         'total' => $result['total_ratings'] ? $result['total_ratings'] : 0
     ];
+}
+
+/**
+ * Log activity
+ */
+function logActivity($activity, $user_id = null) {
+    $log_file = __DIR__ . '/../logs/activity.log';
+    $log_dir = dirname($log_file);
+    
+    // Create logs directory if it doesn't exist
+    if (!is_dir($log_dir)) {
+        mkdir($log_dir, 0755, true);
+    }
+    
+    $timestamp = date('Y-m-d H:i:s');
+    $ip = getClientIP();
+    $user_info = $user_id ? "User: $user_id" : "Guest";
+    
+    $log_entry = "[$timestamp] [$ip] [$user_info] $activity" . PHP_EOL;
+    
+    file_put_contents($log_file, $log_entry, FILE_APPEND | LOCK_EX);
+}
+
+/**
+ * Send email notification
+ */
+function sendEmailNotification($to, $subject, $body, $from = 'noreply@foodfusion.com') {
+    $headers = "From: $from\r\n";
+    $headers .= "Reply-To: $from\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $body, $headers);
+}
+
+/**
+ * Get featured recipes
+ */
+function getFeaturedRecipes($limit = 6) {
+    $db = getDBConnection();
+    
+    $query = "SELECT r.*, u.first_name, u.last_name 
+              FROM recipes r 
+              JOIN users u ON r.user_id = u.id 
+              WHERE r.is_featured = 1 
+              ORDER BY r.created_at DESC 
+              LIMIT ?";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$limit]);
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get recent community posts
+ */
+function getRecentCommunityPosts($limit = 10) {
+    $db = getDBConnection();
+    
+    $query = "SELECT cp.*, u.first_name, u.last_name 
+              FROM community_posts cp 
+              JOIN users u ON cp.user_id = u.id 
+              ORDER BY cp.created_at DESC 
+              LIMIT ?";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$limit]);
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

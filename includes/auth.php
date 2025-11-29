@@ -1,7 +1,6 @@
 <?php
 /**
- * Authentication Helper Functions for FoodFusion
- * Provides user authentication and authorization functions
+ * Enhanced Authentication Helper Functions for FoodFusion
  */
 
 // Start session if not already started
@@ -11,7 +10,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 /**
  * Check if user is logged in
- * @return bool True if user is logged in, false otherwise
  */
 function isLoggedIn() {
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
@@ -19,7 +17,6 @@ function isLoggedIn() {
 
 /**
  * Get current user ID
- * @return int|null User ID if logged in, null otherwise
  */
 function getCurrentUserId() {
     return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
@@ -27,7 +24,6 @@ function getCurrentUserId() {
 
 /**
  * Get current user information
- * @return array|null User data if logged in, null otherwise
  */
 function getCurrentUser() {
     if (!isLoggedIn()) {
@@ -38,7 +34,7 @@ function getCurrentUser() {
     $database = new Database();
     $db = $database->getConnection();
     
-    $query = "SELECT id, first_name, last_name, email, created_at FROM users WHERE id = ?";
+    $query = "SELECT id, first_name, last_name, email, profile_image, bio, created_at, is_admin FROM users WHERE id = ?";
     $stmt = $db->prepare($query);
     $stmt->execute([$_SESSION['user_id']]);
     
@@ -50,9 +46,15 @@ function getCurrentUser() {
 }
 
 /**
- * Check if user account is locked
- * @param string $email User email
- * @return bool True if account is locked, false otherwise
+ * Check if user is admin
+ */
+function isAdmin() {
+    $user = getCurrentUser();
+    return $user && $user['is_admin'];
+}
+
+/**
+ * Check if account is locked
  */
 function isAccountLocked($email) {
     include 'config/database.php';
@@ -67,9 +69,7 @@ function isAccountLocked($email) {
 }
 
 /**
- * Get remaining lock time for an account
- * @param string $email User email
- * @return int Remaining lock time in seconds
+ * Get remaining lock time
  */
 function getRemainingLockTime($email) {
     include 'config/database.php';
@@ -94,15 +94,12 @@ function getRemainingLockTime($email) {
 
 /**
  * Increment failed login attempts
- * @param string $email User email
- * @return bool True if account is now locked, false otherwise
  */
 function incrementFailedAttempts($email) {
     include 'config/database.php';
     $database = new Database();
     $db = $database->getConnection();
     
-    // Get current failed attempts
     $query = "SELECT failed_attempts FROM users WHERE email = ?";
     $stmt = $db->prepare($query);
     $stmt->execute([$email]);
@@ -112,7 +109,6 @@ function incrementFailedAttempts($email) {
         $failed_attempts = $user['failed_attempts'] + 1;
         
         if ($failed_attempts >= 3) {
-            // Lock account for 3 minutes
             $lock_time = date('Y-m-d H:i:s', strtotime('+3 minutes'));
             $query = "UPDATE users SET failed_attempts = ?, locked_until = ? WHERE email = ?";
             $stmt = $db->prepare($query);
@@ -131,8 +127,6 @@ function incrementFailedAttempts($email) {
 
 /**
  * Reset failed login attempts
- * @param string $email User email
- * @return bool Success status
  */
 function resetFailedAttempts($email) {
     include 'config/database.php';
@@ -146,9 +140,6 @@ function resetFailedAttempts($email) {
 
 /**
  * Verify user credentials
- * @param string $email User email
- * @param string $password User password
- * @return array|false User data if credentials are valid, false otherwise
  */
 function verifyCredentials($email, $password) {
     include 'config/database.php';
@@ -170,9 +161,7 @@ function verifyCredentials($email, $password) {
 }
 
 /**
- * Check if email already exists
- * @param string $email Email to check
- * @return bool True if email exists, false otherwise
+ * Check if email exists
  */
 function emailExists($email) {
     include 'config/database.php';
@@ -188,11 +177,6 @@ function emailExists($email) {
 
 /**
  * Register new user
- * @param string $first_name User first name
- * @param string $last_name User last name
- * @param string $email User email
- * @param string $password User password (plain text)
- * @return int|false New user ID if successful, false otherwise
  */
 function registerUser($first_name, $last_name, $email, $password) {
     include 'config/database.php';
@@ -213,7 +197,6 @@ function registerUser($first_name, $last_name, $email, $password) {
 
 /**
  * Require user to be logged in
- * @param string $redirect_url URL to redirect to if not logged in
  */
 function requireLogin($redirect_url = 'login.php') {
     if (!isLoggedIn()) {
@@ -224,8 +207,18 @@ function requireLogin($redirect_url = 'login.php') {
 }
 
 /**
+ * Require admin access
+ */
+function requireAdmin($redirect_url = 'index.php') {
+    if (!isAdmin()) {
+        setFlashMessage('error', 'Administrator access required.');
+        header("Location: $redirect_url");
+        exit;
+    }
+}
+
+/**
  * Require user to be logged out
- * @param string $redirect_url URL to redirect to if logged in
  */
 function requireLogout($redirect_url = 'index.php') {
     if (isLoggedIn()) {
@@ -235,7 +228,7 @@ function requireLogout($redirect_url = 'index.php') {
 }
 
 /**
- * Logout user and clear session
+ * Logout user
  */
 function logoutUser() {
     $_SESSION = array();
@@ -253,7 +246,6 @@ function logoutUser() {
 
 /**
  * Generate CSRF token
- * @return string CSRF token
  */
 function generateCSRFToken() {
     if (empty($_SESSION['csrf_token'])) {
@@ -264,8 +256,6 @@ function generateCSRFToken() {
 
 /**
  * Validate CSRF token
- * @param string $token Token to validate
- * @return bool True if token is valid, false otherwise
  */
 function validateCSRFToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
@@ -273,10 +263,27 @@ function validateCSRFToken($token) {
 
 /**
  * Secure input data
- * @param string $data Input data
- * @return string Sanitized data
  */
 function sanitizeInput($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Update user profile
+ */
+function updateUserProfile($user_id, $first_name, $last_name, $bio, $profile_image = null) {
+    include 'config/database.php';
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    if ($profile_image) {
+        $query = "UPDATE users SET first_name = ?, last_name = ?, bio = ?, profile_image = ? WHERE id = ?";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$first_name, $last_name, $bio, $profile_image, $user_id]);
+    } else {
+        $query = "UPDATE users SET first_name = ?, last_name = ?, bio = ? WHERE id = ?";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$first_name, $last_name, $bio, $user_id]);
+    }
 }
 ?>
