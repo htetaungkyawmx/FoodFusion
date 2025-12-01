@@ -1,93 +1,64 @@
-<?php include 'includes/header.php'; ?>
+<?php
+$page_title = "Recipes - FoodFusion";
+include 'includes/header.php';
+include 'includes/functions.php';
 
-<div class="container">
-    <section class="page-header">
-        <h1>Recipe Collection</h1>
-        <p>Discover delicious recipes from around the world</p>
-    </section>
+// Get filters
+$filters = [];
+if (isset($_GET['cuisine'])) $filters['cuisine'] = sanitizeInput($_GET['cuisine']);
+if (isset($_GET['difficulty'])) $filters['difficulty'] = sanitizeInput($_GET['difficulty']);
 
-    <!-- Recipe Filters -->
-    <div class="filters">
+$recipes = getAllRecipes($filters);
+?>
+
+<div class="container main-content">
+    <h1>Recipe Collection</h1>
+    
+    <!-- Filters -->
+    <div class="filters" style="margin-bottom: 2rem;">
         <form method="GET" action="">
-            <select name="cuisine">
+            <select name="cuisine" class="form-control" style="display: inline-block; width: auto;">
                 <option value="">All Cuisines</option>
-                <option value="Italian">Italian</option>
-                <option value="Asian">Asian</option>
-                <option value="Mexican">Mexican</option>
-                <option value="Indian">Indian</option>
-                <option value="Mediterranean">Mediterranean</option>
+                <option value="Italian" <?php echo ($filters['cuisine'] ?? '') == 'Italian' ? 'selected' : ''; ?>>Italian</option>
+                <option value="Asian" <?php echo ($filters['cuisine'] ?? '') == 'Asian' ? 'selected' : ''; ?>>Asian</option>
+                <option value="Mexican" <?php echo ($filters['cuisine'] ?? '') == 'Mexican' ? 'selected' : ''; ?>>Mexican</option>
             </select>
             
-            <select name="diet">
-                <option value="">All Diets</option>
-                <option value="Vegetarian">Vegetarian</option>
-                <option value="Vegan">Vegan</option>
-                <option value="Non-Vegetarian">Non-Vegetarian</option>
-            </select>
-            
-            <select name="difficulty">
+            <select name="difficulty" class="form-control" style="display: inline-block; width: auto;">
                 <option value="">All Levels</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
+                <option value="Easy" <?php echo ($filters['difficulty'] ?? '') == 'Easy' ? 'selected' : ''; ?>>Easy</option>
+                <option value="Medium" <?php echo ($filters['difficulty'] ?? '') == 'Medium' ? 'selected' : ''; ?>>Medium</option>
+                <option value="Hard" <?php echo ($filters['difficulty'] ?? '') == 'Hard' ? 'selected' : ''; ?>>Hard</option>
             </select>
             
             <button type="submit" class="btn">Filter</button>
+            <a href="recipes.php" class="btn btn-outline">Clear</a>
         </form>
     </div>
-
-    <!-- Recipes Grid -->
+    
+    <!-- Recipe Grid -->
     <div class="recipe-grid">
-        <?php
-        include 'config/database.php';
-        $database = new Database();
-        $db = $database->getConnection();
-        
-        // Build query based on filters
-        $query = "SELECT * FROM recipes WHERE 1=1";
-        $params = [];
-        
-        if(isset($_GET['cuisine']) && !empty($_GET['cuisine'])) {
-            $query .= " AND cuisine_type = ?";
-            $params[] = $_GET['cuisine'];
-        }
-        
-        if(isset($_GET['diet']) && !empty($_GET['diet'])) {
-            $query .= " AND dietary_preference = ?";
-            $params[] = $_GET['diet'];
-        }
-        
-        if(isset($_GET['difficulty']) && !empty($_GET['difficulty'])) {
-            $query .= " AND difficulty_level = ?";
-            $params[] = $_GET['difficulty'];
-        }
-        
-        $query .= " ORDER BY created_at DESC";
-        
-        $stmt = $db->prepare($query);
-        $stmt->execute($params);
-        
-        if($stmt->rowCount() > 0) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '
+        <?php if ($recipes): ?>
+            <?php foreach ($recipes as $recipe): ?>
                 <div class="recipe-card">
-                    <h3>' . htmlspecialchars($row['title']) . '</h3>
-                    <div class="recipe-meta">
-                        <span class="cuisine">' . htmlspecialchars($row['cuisine_type']) . '</span>
-                        <span class="diet">' . htmlspecialchars($row['dietary_preference']) . '</span>
-                        <span class="difficulty">' . htmlspecialchars($row['difficulty_level']) . '</span>
+                    <div class="recipe-image">
+                        <img src="<?php echo $recipe['featured_image'] ?: 'assets/images/default-recipe.jpg'; ?>" alt="<?php echo htmlspecialchars($recipe['title']); ?>">
                     </div>
-                    <p><strong>Time:</strong> ' . htmlspecialchars($row['cooking_time']) . ' minutes</p>
-                    <p>' . htmlspecialchars(substr($row['description'], 0, 150)) . '...</p>
-                    <div class="recipe-actions">
-                        <button class="btn btn-view">View Recipe</button>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title"><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                        <div class="recipe-meta">
+                            <span><i class="fas fa-clock"></i> <?php echo $recipe['cooking_time']; ?> min</span>
+                            <span><i class="fas fa-user"></i> <?php echo $recipe['servings']; ?> servings</span>
+                            <span><i class="fas fa-fire"></i> <?php echo $recipe['difficulty_level']; ?></span>
+                        </div>
+                        <p><?php echo htmlspecialchars(substr($recipe['description'], 0, 100)); ?>...</p>
+                        <a href="recipe-detail.php?id=<?php echo $recipe['id']; ?>" class="btn">View Recipe</a>
                     </div>
-                </div>';
-            }
-        } else {
-            echo '<p>No recipes found matching your criteria.</p>';
-        }
-        ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No recipes found.</p>
+        <?php endif; ?>
     </div>
 </div>
 

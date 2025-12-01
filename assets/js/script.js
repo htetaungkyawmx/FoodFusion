@@ -343,3 +343,323 @@ const FoodFusion = {
         };
     }
 };
+
+// Cookie Consent Management
+class CookieConsent {
+    constructor() {
+        this.cookieName = 'foodfusion_cookies';
+        this.consent = this.getConsent();
+        this.init();
+    }
+    
+    init() {
+        if (!this.consent || this.consent.version < 2) {
+            setTimeout(() => this.showConsent(), 1000);
+        }
+    }
+    
+    getConsent() {
+        const cookie = document.cookie.split('; ').find(row => row.startsWith(`${this.cookieName}=`));
+        return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : null;
+    }
+    
+    showConsent() {
+        const consentElement = document.getElementById('cookieConsent');
+        if (consentElement) {
+            consentElement.classList.add('show');
+            this.bindEvents();
+        }
+    }
+    
+    hideConsent() {
+        const consentElement = document.getElementById('cookieConsent');
+        if (consentElement) {
+            consentElement.classList.remove('show');
+        }
+    }
+    
+    saveConsent(preferences) {
+        const consent = {
+            essential: true,
+            analytics: preferences.analytics || false,
+            marketing: preferences.marketing || false,
+            version: 2,
+            timestamp: new Date().toISOString()
+        };
+        
+        const expiry = new Date();
+        expiry.setFullYear(expiry.getFullYear() + 1);
+        
+        document.cookie = `${this.cookieName}=${encodeURIComponent(JSON.stringify(consent))}; expires=${expiry.toUTCString()}; path=/; SameSite=Lax`;
+        
+        // Apply consent preferences
+        this.applyConsent(consent);
+        this.hideConsent();
+        
+        // Show confirmation
+        this.showNotification('Cookie preferences saved successfully!', 'success');
+    }
+    
+    applyConsent(consent) {
+        // Google Analytics
+        if (consent.analytics) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXXXXX');
+        }
+        
+        // Marketing pixels
+        if (consent.marketing) {
+            // Initialize marketing scripts here
+            console.log('Marketing cookies enabled');
+        }
+    }
+    
+    bindEvents() {
+        // Close button
+        const closeBtn = document.getElementById('cookieClose');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.hideConsent());
+        }
+        
+        // Save preferences
+        const saveBtn = document.querySelector('.btn-save');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                const preferences = {
+                    analytics: document.querySelector('input[name="analytics"]').checked,
+                    marketing: document.querySelector('input[name="marketing"]').checked
+                };
+                this.saveConsent(preferences);
+            });
+        }
+        
+        // Accept all
+        const acceptBtn = document.querySelector('.btn-accept');
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                this.saveConsent({ analytics: true, marketing: true });
+            });
+        }
+        
+        // Cookie type toggle details
+        const cookieTypes = document.querySelectorAll('.cookie-type');
+        cookieTypes.forEach(type => {
+            const header = type.querySelector('.type-header');
+            header.addEventListener('click', () => {
+                type.classList.toggle('active');
+            });
+        });
+    }
+    
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'success' ? 'check' : 'info'}-circle"></i>
+                <span>${message}</span>
+            </div>
+            <button class="notification-close">&times;</button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Auto remove
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 5000);
+        
+        // Close button
+        notification.querySelector('.notification-close').addEventListener('click', () => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        });
+    }
+}
+
+// Footer functionality
+class EnhancedFooter {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.initNewsletter();
+        this.initScrollToTop();
+        this.initQuickChat();
+        this.initLanguageSelector();
+    }
+    
+    initNewsletter() {
+        const form = document.getElementById('newsletterForm');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = form.querySelector('input[type="email"]').value;
+                this.subscribeNewsletter(email);
+            });
+        }
+    }
+    
+    subscribeNewsletter(email) {
+        // Simulate API call
+        const btn = document.querySelector('.btn-newsletter');
+        const originalHTML = btn.innerHTML;
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = '#27ae60';
+            
+            // Show success message
+            const notification = document.createElement('div');
+            notification.className = 'notification notification-success';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Successfully subscribed to newsletter!</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+            
+            // Reset form
+            document.getElementById('newsletterForm').reset();
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 2000);
+        }, 1500);
+    }
+    
+    initScrollToTop() {
+        const btn = document.getElementById('backToTop');
+        if (btn) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+            
+            btn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    }
+    
+    initQuickChat() {
+        const chatBtn = document.getElementById('quickChat');
+        if (chatBtn) {
+            chatBtn.addEventListener('click', () => {
+                // Open chat modal or redirect to chat page
+                window.open('chat.php', '_blank');
+            });
+        }
+    }
+    
+    initLanguageSelector() {
+        const selector = document.getElementById('languageSelect');
+        if (selector) {
+            selector.addEventListener('change', (e) => {
+                const lang = e.target.value;
+                // Implement language change logic
+                console.log('Language changed to:', lang);
+                // In real app: window.location.href = `?lang=${lang}`;
+            });
+        }
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize cookie consent
+    const cookieConsent = new CookieConsent();
+    
+    // Initialize footer functionality
+    const enhancedFooter = new EnhancedFooter();
+    
+    // Add tooltip functionality
+    const elementsWithTooltip = document.querySelectorAll('[data-tooltip]');
+    elementsWithTooltip.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = this.dataset.tooltip;
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.position = 'fixed';
+            tooltip.style.left = rect.left + rect.width / 2 + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+            tooltip.style.transform = 'translateX(-50%)';
+            
+            this._tooltip = tooltip;
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            if (this._tooltip) {
+                this._tooltip.remove();
+                this._tooltip = null;
+            }
+        });
+    });
+    
+    // Add hover effects to social links
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.1)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+// Global functions for backward compatibility
+function acceptCookies() {
+    const cookieConsent = new CookieConsent();
+    cookieConsent.saveConsent({ analytics: true, marketing: true });
+}
+
+function customizeCookies() {
+    const consentElement = document.getElementById('cookieConsent');
+    if (consentElement) {
+        consentElement.classList.add('show');
+    }
+}
+
+function saveCookiePreferences() {
+    const cookieConsent = new CookieConsent();
+    const preferences = {
+        analytics: document.querySelector('input[name="analytics"]').checked,
+        marketing: document.querySelector('input[name="marketing"]').checked
+    };
+    cookieConsent.saveConsent(preferences);
+}
+
+function acceptAllCookies() {
+    const cookieConsent = new CookieConsent();
+    cookieConsent.saveConsent({ analytics: true, marketing: true });
+}
