@@ -64,7 +64,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Additional Download 1 -->
                     <div class="resource-card">
                         <div class="resource-icon">
                             <i class="fas fa-calendar-alt"></i>
@@ -76,7 +75,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Additional Download 2 -->
                     <div class="resource-card">
                         <div class="resource-icon">
                             <i class="fas fa-heartbeat"></i>
@@ -93,7 +91,6 @@ include 'includes/header.php';
             <div class="tab-content" id="tutorials">
                 <h2><i class="fas fa-video"></i> Cooking Tutorials</h2>
                 <div class="tutorials-grid">
-                    <!-- Professional Cooking Techniques -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional Cooking Techniques" class="video-thumbnail">
@@ -108,7 +105,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Jamie Oliver Cooking Skills -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Jamie Oliver Cooking Skills" class="video-thumbnail">
@@ -123,7 +119,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Gordon Ramsay Ultimate Cooking Guide -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gordon Ramsay Cooking Guide" class="video-thumbnail">
@@ -138,7 +133,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Italian Pasta Making Masterclass -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pasta Making Masterclass" class="video-thumbnail">
@@ -153,7 +147,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- Sushi Making at Home -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sushi Making at Home" class="video-thumbnail">
@@ -168,7 +161,6 @@ include 'includes/header.php';
                         </a>
                     </div>
                     
-                    <!-- French Baking Masterclass -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
                             <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="French Baking Masterclass" class="video-thumbnail">
@@ -187,49 +179,95 @@ include 'includes/header.php';
 
             <div class="tab-content" id="guides">
                 <h2><i class="fas fa-book-open"></i> Cooking Guides</h2>
-                <div class="guides-list">
-                    <div class="guide-item">
-                        <i class="fas fa-leaf"></i>
-                        <div class="guide-content">
-                            <h3>Seasonal Cooking Guide</h3>
-                            <p>Learn what fruits and vegetables are in season each month</p>
-                            <a href="guides/seasonal-cooking.pdf" class="guide-link" download>
-                                <i class="fas fa-download"></i> Download PDF
-                            </a>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-leaf"></i>
                         </div>
+                        <h3>Seasonal Cooking Guide</h3>
+                        <p>Learn what fruits and vegetables are in season each month</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-apple-alt"></i> Monthly charts</span>
+                            <span><i class="fas fa-shopping-basket"></i> Shopping tips</span>
+                        </div>
+                        <a href="guides/seasonal-cooking.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
                     </div>
                     
-                    <div class="guide-item">
-                        <i class="fas fa-fire"></i>
-                        <div class="guide-content">
-                            <h3>Cooking Temperature Guide</h3>
-                            <p>Safe cooking temperatures for different types of food</p>
-                            <a href="guides/cooking-temperatures.pdf" class="guide-link" download>
-                                <i class="fas fa-download"></i> Download PDF
-                            </a>
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-fire"></i>
                         </div>
+                        <h3>Cooking Temperature Guide</h3>
+                        <p>Safe cooking temperatures for different types of food</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-thermometer-half"></i> Meat temps</span>
+                            <span><i class="fas fa-fish"></i> Seafood temps</span>
+                        </div>
+                        <a href="guides/cooking-temperatures.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
                     </div>
                     
-                    <div class="guide-item">
-                        <i class="fas fa-clock"></i>
-                        <div class="guide-content">
-                            <h3>Food Storage Guide</h3>
-                            <p>How to properly store different foods to maximize freshness</p>
-                            <a href="guides/food-storage.pdf" class="guide-link" download>
-                                <i class="fas fa-download"></i> Download PDF
-                            </a>
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-clock"></i>
                         </div>
+                        <h3>Food Storage Guide</h3>
+                        <p>How to properly store different foods to maximize freshness</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-snowflake"></i> Refrigeration</span>
+                            <span><i class="fas fa-box"></i> Freezing tips</span>
+                        </div>
+                        <a href="guides/food-storage.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
                     </div>
                     
-                    <div class="guide-item">
-                        <i class="fas fa-seedling"></i>
-                        <div class="guide-content">
-                            <h3>Vegetarian Cooking Guide</h3>
-                            <p>Essential nutrients and protein sources for vegetarian cooking</p>
-                            <a href="guides/vegetarian-cooking.pdf" class="guide-link" download>
-                                <i class="fas fa-download"></i> Download PDF
-                            </a>
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-seedling"></i>
                         </div>
+                        <h3>Vegetarian Cooking Guide</h3>
+                        <p>Essential nutrients and protein sources for vegetarian cooking</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-carrot"></i> Protein sources</span>
+                            <span><i class="fas fa-heart"></i> Health benefits</span>
+                        </div>
+                        <a href="guides/vegetarian-cooking.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-wine-bottle"></i>
+                        </div>
+                        <h3>Wine Pairing Guide</h3>
+                        <p>Learn which wines pair best with different foods and dishes</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-utensils"></i> Food matching</span>
+                            <span><i class="fas fa-glass-cheers"></i> Serving tips</span>
+                        </div>
+                        <a href="guides/wine-pairing.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <h3>Global Spices Guide</h3>
+                        <p>Explore spices from around the world and how to use them</p>
+                        <div class="guide-features">
+                            <span><i class="fas fa-pepper-hot"></i> Spice profiles</span>
+                            <span><i class="fas fa-mortar-pestle"></i> Usage tips</span>
+                        </div>
+                        <a href="guides/global-spices.pdf" class="guide-download-btn" download>
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
                     </div>
                 </div>
             </div>
@@ -328,6 +366,7 @@ include 'includes/header.php';
     color: #FF6B6B;
 }
 
+/* Downloads Grid */
 .downloads-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -399,6 +438,7 @@ include 'includes/header.php';
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
 }
 
+/* Tutorials Grid */
 .tutorials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -494,91 +534,126 @@ include 'includes/header.php';
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-.guides-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+/* Guides Grid */
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
     margin-bottom: 3rem;
 }
 
-.guide-item {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem;
+.guide-card {
     background: white;
     border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     transition: all 0.3s;
     border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.guide-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+.guide-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-.guide-item i {
-    font-size: 2.5rem;
-    color: #FF6B6B;
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 142, 83, 0.1));
-    width: 70px;
-    height: 70px;
-    border-radius: 12px;
+.guide-icon {
+    font-size: 3.5rem;
+    color: #4ECDC4;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(68, 160, 141, 0.1));
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    margin: 0 auto 1.5rem;
 }
 
-.guide-content h3 {
-    margin-bottom: 0.5rem;
+.guide-card h3 {
+    margin-bottom: 1rem;
     color: #333;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
+    text-align: center;
 }
 
-.guide-content p {
+.guide-card p {
     color: #666;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     line-height: 1.6;
     font-size: 0.95rem;
+    text-align: center;
 }
 
-.guide-link {
-    color: #FF6B6B;
-    text-decoration: none;
+.guide-features {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.guide-features span {
+    background: rgba(78, 205, 196, 0.1);
+    color: #44A08D;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.guide-features i {
+    font-size: 0.9rem;
+}
+
+.guide-download-btn {
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     font-weight: 600;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s;
+    margin-top: auto;
 }
 
-.guide-link:hover {
-    color: #FF8E53;
-    gap: 0.75rem;
+.guide-download-btn:hover {
+    background: linear-gradient(135deg, #3db8af, #368f7a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
 }
 
 .resources-cta {
-    background: linear-gradient(135deg, #4ECDC4, #44A08D);
-    color: white;
+    background: linear-gradient(135deg, #FFD166, #FFB347);
+    color: #333;
     padding: 3rem;
     border-radius: 15px;
     text-align: center;
     margin-top: 4rem;
-    box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+    box-shadow: 0 10px 30px rgba(255, 209, 102, 0.3);
 }
 
 .cta-content h2 {
-    color: white;
+    color: #333;
     margin-bottom: 1rem;
     font-size: 2rem;
     font-weight: 700;
 }
 
 .cta-content p {
-    opacity: 0.95;
+    color: #555;
     margin-bottom: 2rem;
     max-width: 600px;
     margin-left: auto;
@@ -588,8 +663,8 @@ include 'includes/header.php';
 }
 
 .btn-large {
-    background: white;
-    color: #4ECDC4;
+    background: #333;
+    color: white;
     border: none;
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
@@ -601,12 +676,13 @@ include 'includes/header.php';
     gap: 0.75rem;
     text-decoration: none;
     transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-large:hover {
+    background: #222;
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Color variations for resource cards */
@@ -635,22 +711,76 @@ include 'includes/header.php';
     background: linear-gradient(135deg, rgba(17, 138, 178, 0.1), rgba(15, 123, 160, 0.1));
 }
 
-/* Different colors for guide items */
-.guide-item:nth-child(1) i { 
+/* Color variations for guide cards */
+.guide-card:nth-child(1) .guide-icon { 
     color: #06D6A0; 
     background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(5, 184, 138, 0.1));
 }
-.guide-item:nth-child(2) i { 
+.guide-card:nth-child(2) .guide-icon { 
     color: #EF476F; 
     background: linear-gradient(135deg, rgba(239, 71, 111, 0.1), rgba(215, 64, 100, 0.1));
 }
-.guide-item:nth-child(3) i { 
+.guide-card:nth-child(3) .guide-icon { 
     color: #FFD166; 
     background: linear-gradient(135deg, rgba(255, 209, 102, 0.1), rgba(255, 179, 71, 0.1));
 }
-.guide-item:nth-child(4) i { 
+.guide-card:nth-child(4) .guide-icon { 
     color: #118AB2; 
     background: linear-gradient(135deg, rgba(17, 138, 178, 0.1), rgba(15, 123, 160, 0.1));
+}
+.guide-card:nth-child(5) .guide-icon { 
+    color: #9D50BB; 
+    background: linear-gradient(135deg, rgba(157, 80, 187, 0.1), rgba(106, 17, 203, 0.1));
+}
+.guide-card:nth-child(6) .guide-icon { 
+    color: #FF8E53; 
+    background: linear-gradient(135deg, rgba(255, 142, 83, 0.1), rgba(255, 107, 107, 0.1));
+}
+
+/* Corresponding colors for guide download buttons */
+.guide-card:nth-child(1) .guide-download-btn { 
+    background: linear-gradient(135deg, #06D6A0, #05B48A);
+}
+.guide-card:nth-child(2) .guide-download-btn { 
+    background: linear-gradient(135deg, #EF476F, #D74064);
+}
+.guide-card:nth-child(3) .guide-download-btn { 
+    background: linear-gradient(135deg, #FFD166, #FFB347);
+}
+.guide-card:nth-child(4) .guide-download-btn { 
+    background: linear-gradient(135deg, #118AB2, #0F7BA0);
+}
+.guide-card:nth-child(5) .guide-download-btn { 
+    background: linear-gradient(135deg, #9D50BB, #6A11CB);
+}
+.guide-card:nth-child(6) .guide-download-btn { 
+    background: linear-gradient(135deg, #FF8E53, #FF6B6B);
+}
+
+/* Corresponding colors for guide features */
+.guide-card:nth-child(1) .guide-features span { 
+    background: rgba(6, 214, 160, 0.1); 
+    color: #05B48A;
+}
+.guide-card:nth-child(2) .guide-features span { 
+    background: rgba(239, 71, 111, 0.1); 
+    color: #D74064;
+}
+.guide-card:nth-child(3) .guide-features span { 
+    background: rgba(255, 209, 102, 0.1); 
+    color: #FFB347;
+}
+.guide-card:nth-child(4) .guide-features span { 
+    background: rgba(17, 138, 178, 0.1); 
+    color: #0F7BA0;
+}
+.guide-card:nth-child(5) .guide-features span { 
+    background: rgba(157, 80, 187, 0.1); 
+    color: #6A11CB;
+}
+.guide-card:nth-child(6) .guide-features span { 
+    background: rgba(255, 142, 83, 0.1); 
+    color: #FF6B6B;
 }
 
 /* Animation for cards */
@@ -667,7 +797,7 @@ include 'includes/header.php';
 
 .resource-card,
 .tutorial-card,
-.guide-item {
+.guide-card {
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -687,18 +817,14 @@ include 'includes/header.php';
         font-size: 0.95rem;
     }
     
-    .tutorials-grid {
+    .tutorials-grid,
+    .guides-grid {
         grid-template-columns: 1fr;
     }
     
-    .guide-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-    
-    .guide-item i {
-        margin: 0 auto;
+    .resource-card,
+    .guide-card {
+        padding: 1.5rem;
     }
 }
 </style>
@@ -730,7 +856,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle download links
     document.querySelectorAll('a[download]').forEach(link => {
         link.addEventListener('click', function(e) {
-            const resourceName = this.closest('.resource-card, .guide-item').querySelector('h3').textContent;
+            const resourceName = this.closest('.resource-card, .guide-card').querySelector('h3').textContent;
             console.log(`Downloading: ${resourceName}`);
             // In real application, this would trigger file download
         });
@@ -747,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.1 });
     
     // Observe resource cards
-    document.querySelectorAll('.resource-card, .tutorial-card, .guide-item').forEach((card, index) => {
+    document.querySelectorAll('.resource-card, .tutorial-card, .guide-card').forEach((card, index) => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = `all 0.6s ease ${index * 0.1}s`;
