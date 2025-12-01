@@ -96,7 +96,7 @@ include 'includes/header.php';
                     <!-- Professional Cooking Techniques -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/CozmWJS0JZY/maxresdefault.jpg" alt="15 Cooking Tricks Chefs Reveal Only at Culinary Schools" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional Cooking Techniques" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -104,14 +104,14 @@ include 'includes/header.php';
                         <h3>15 Cooking Tricks Chefs Reveal</h3>
                         <p>Professional secrets only taught in culinary schools</p>
                         <a href="https://www.youtube.com/watch?v=CozmWJS0JZY" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                     
                     <!-- Jamie Oliver Cooking Skills -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/PPmI-vZMfSU/maxresdefault.jpg" alt="Jamie Oliver's Quick Cooking Skills" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Jamie Oliver Cooking Skills" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -119,14 +119,14 @@ include 'includes/header.php';
                         <h3>Jamie Oliver's Quick Cooking</h3>
                         <p>Essential skills for quick and delicious meals</p>
                         <a href="https://www.youtube.com/watch?v=PPmI-vZMfSU" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                     
                     <!-- Gordon Ramsay Ultimate Cooking Guide -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/kkHN_BC9mdg/maxresdefault.jpg" alt="Gordon Ramsay's Ultimate Cooking Guide" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gordon Ramsay Cooking Guide" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -134,14 +134,14 @@ include 'includes/header.php';
                         <h3>Gordon Ramsay Ultimate Guide</h3>
                         <p>Master cooking techniques with Gordon Ramsay</p>
                         <a href="https://www.youtube.com/watch?v=kkHN_BC9mdg" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                     
                     <!-- Italian Pasta Making Masterclass -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/sv0BkQmaI3M/maxresdefault.jpg" alt="Pasta Making Masterclass" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pasta Making Masterclass" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -149,14 +149,14 @@ include 'includes/header.php';
                         <h3>Pasta Making Masterclass</h3>
                         <p>Learn authentic Italian pasta making from scratch</p>
                         <a href="https://www.youtube.com/watch?v=sv0BkQmaI3M" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                     
                     <!-- Sushi Making at Home -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/lyHlv-c3o7w/maxresdefault.jpg" alt="How to Make Perfect Sushi at Home" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sushi Making at Home" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -164,14 +164,14 @@ include 'includes/header.php';
                         <h3>Perfect Sushi at Home</h3>
                         <p>Professional sushi techniques you can do at home</p>
                         <a href="https://www.youtube.com/watch?v=lyHlv-c3o7w" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                     
                     <!-- French Baking Masterclass -->
                     <div class="tutorial-card">
                         <div class="tutorial-video">
-                            <img src="https://img.youtube.com/vi/lp8RsLQ1P8Q/maxresdefault.jpg" alt="French Baking Masterclass" class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="French Baking Masterclass" class="video-thumbnail">
                             <div class="play-overlay">
                                 <i class="fas fa-play-circle"></i>
                             </div>
@@ -179,7 +179,7 @@ include 'includes/header.php';
                         <h3>French Baking Masterclass</h3>
                         <p>Learn the secrets of classic French pastry making</p>
                         <a href="https://www.youtube.com/watch?v=lp8RsLQ1P8Q" target="_blank" class="btn btn-outline">
-                            <i class="fas fa-play"></i> Watch Tutorial
+                            <i class="fas fa-play"></i> Watch on YouTube
                         </a>
                     </div>
                 </div>
@@ -444,18 +444,26 @@ include 'includes/header.php';
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 4rem;
-    opacity: 0.9;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
+}
+
+.tutorial-card:hover .play-overlay {
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .play-overlay i {
     text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+.tutorial-card:hover .play-overlay i {
+    transform: scale(1.1);
 }
 
 .tutorial-card h3 {
@@ -725,19 +733,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const resourceName = this.closest('.resource-card, .guide-item').querySelector('h3').textContent;
             console.log(`Downloading: ${resourceName}`);
             // In real application, this would trigger file download
-        });
-    });
-    
-    // Video thumbnail hover effect
-    document.querySelectorAll('.tutorial-video').forEach(video => {
-        video.addEventListener('mouseenter', function() {
-            const overlay = this.querySelector('.play-overlay');
-            overlay.style.opacity = '1';
-        });
-        
-        video.addEventListener('mouseleave', function() {
-            const overlay = this.querySelector('.play-overlay');
-            overlay.style.opacity = '0.9';
         });
     });
     
