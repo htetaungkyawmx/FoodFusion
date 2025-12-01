@@ -193,7 +193,7 @@ include 'includes/header.php';
     text-align: center;
     padding: 3.5rem 0;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    background: linear-gradient(135deg, #FF6B7CFF, #53CEFFFF);
     color: white;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);

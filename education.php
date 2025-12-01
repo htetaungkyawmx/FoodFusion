@@ -229,7 +229,7 @@ include 'includes/header.php';
     text-align: center;
     padding: 3rem 0;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: linear-gradient(135deg, #FF6B7CFF, #27AEA7FF);
     color: white;
     border-radius: 10px;
 }
