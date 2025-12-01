@@ -35,9 +35,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li><a href="about.php">About</a></li>
                 <li><a href="recipes.php">Recipes</a></li>
                 <li><a href="community.php">Community</a></li>
+                <li><a href="contact.php">Contact</a></li>
                 <li><a href="resources.php">Resources</a></li>
                 <li><a href="education.php">Educational</a></li>
-                <li><a href="contact.php">Contact</a></li>
                 
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <li class="user-menu">
