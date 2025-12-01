@@ -1,53 +1,85 @@
 <?php
-// Include database connection
-include 'config/database.php';
+// includes/functions.php
 
 function sanitizeInput($data) {
-    return htmlspecialchars(strip_tags(trim($data)));
+    if (is_array($data)) {
+        return array_map('sanitizeInput', $data);
+    }
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    return $data;
 }
 
-function displayError($message) {
-    return '<div class="alert alert-error">' . $message . '</div>';
-}
-
-function displaySuccess($message) {
-    return '<div class="alert alert-success">' . $message . '</div>';
+function validateEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function getFeaturedRecipes($limit = 6) {
+    include 'config/database.php';
     $database = new Database();
     $db = $database->getConnection();
     
-    $query = "SELECT * FROM recipes WHERE is_featured = 1 ORDER BY created_at DESC LIMIT ?";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(1, $limit, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $query = "SELECT * FROM recipes WHERE featured = 1 ORDER BY created_at DESC LIMIT ?";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return [];
+    }
 }
 
-function getAllRecipes($filters = []) {
+function getUserRecipes($user_id) {
+    include 'config/database.php';
     $database = new Database();
     $db = $database->getConnection();
     
-    $query = "SELECT * FROM recipes WHERE 1=1";
-    $params = [];
-    
-    if (isset($filters['cuisine']) && $filters['cuisine']) {
-        $query .= " AND cuisine_type = ?";
-        $params[] = $filters['cuisine'];
+    try {
+        $query = "SELECT * FROM recipes WHERE user_id = ? ORDER BY created_at DESC";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return [];
     }
-    
-    if (isset($filters['difficulty']) && $filters['difficulty']) {
-        $query .= " AND difficulty_level = ?";
-        $params[] = $filters['difficulty'];
+}
+
+function redirect($url, $message = '') {
+    if ($message) {
+        $_SESSION['flash_message'] = $message;
     }
-    
-    $query .= " ORDER BY created_at DESC";
-    
-    $stmt = $db->prepare($query);
-    $stmt->execute($params);
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    header('Location: ' . $url);
+    exit();
+}
+
+function getFlashMessage() {
+    if (isset($_SESSION['flash_message'])) {
+        $message = $_SESSION['flash_message'];
+        unset($_SESSION['flash_message']);
+        return $message;
+    }
+    return '';
+}
+
+function generateSlug($string) {
+    $string = preg_replace('/[^a-zA-Z0-9\s]/', '', $string);
+    $string = strtolower(trim($string));
+    $string = preg_replace('/\s+/', '-', $string);
+    return $string;
+}
+
+function formatDate($date) {
+    return date('F j, Y', strtotime($date));
+}
+
+function truncateText($text, $length = 100) {
+    if (strlen($text) <= $length) {
+        return $text;
+    }
+    return substr($text, 0, $length) . '...';
 }
 ?>
