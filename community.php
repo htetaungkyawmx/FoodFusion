@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     text-align: center;
     padding: 3rem 0;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    background: linear-gradient(135deg, #FF6B7CFF, #6BFFCEFF);
     color: white;
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
