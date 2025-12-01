@@ -46,54 +46,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="contact-content">
             <div class="contact-form-section">
-                <h2><i class="fas fa-envelope"></i> Send us a Message</h2>
-                
-                <?php if ($error): ?>
-                    <div class="alert alert-error"><?php echo $error; ?></div>
-                <?php endif; ?>
-                
-                <?php if ($success): ?>
-                    <div class="alert alert-success"><?php echo $success; ?></div>
-                <?php endif; ?>
-                
-                <form method="POST" action="" class="contact-form">
-                    <div class="form-row">
+                <div class="form-container">
+                    <h2><i class="fas fa-envelope"></i> Send us a Message</h2>
+                    
+                    <?php if ($error): ?>
+                        <div class="alert alert-error"><?php echo $error; ?></div>
+                    <?php endif; ?>
+                    
+                    <?php if ($success): ?>
+                        <div class="alert alert-success"><?php echo $success; ?></div>
+                    <?php endif; ?>
+                    
+                    <form method="POST" action="" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Your Name *</label>
+                                <input type="text" name="name" class="form-control" 
+                                       value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>" 
+                                       required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Your Email *</label>
+                                <input type="email" name="email" class="form-control" 
+                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" 
+                                       required>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
-                            <label class="form-label">Your Name *</label>
-                            <input type="text" name="name" class="form-control" 
-                                   value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>" 
+                            <label class="form-label">Subject *</label>
+                            <input type="text" name="subject" class="form-control" 
+                                   value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>" 
                                    required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Your Email *</label>
-                            <input type="email" name="email" class="form-control" 
-                                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" 
-                                   required>
+                            <label class="form-label">Message *</label>
+                            <textarea name="message" class="form-control" rows="6" required><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Subject *</label>
-                        <input type="text" name="subject" class="form-control" 
-                               value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>" 
-                               required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Message *</label>
-                        <textarea name="message" class="form-control" rows="6" required><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
+                        
+                        <button type="submit" class="btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
             </div>
             
             <div class="contact-info-section">
-                <div class="info-card">
-                    <h2><i class="fas fa-info-circle"></i> Contact Information</h2>
+                <div class="info-container">
+                    <div class="contact-item address-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Find us in</h3>
+                            <p>141 Walton Rd, Walton</p>
+                            <p>Liverpool L4 4AH</p>
+                            <p>United Kingdom</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <div class="map-wrapper">
+                            <!-- Google Maps Embed -->
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2378.571472055433!2d-2.9680543!3d53.4291534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b21636a7fbfc9%3A0x3f2a9be8e4fa6dac!2s141%20Walton%20Rd%2C%20Walton%2C%20Liverpool%20L4%204AH%2C%20UK!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                                width="100%" 
+                                height="250" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
                     
                     <div class="contact-item">
                         <div class="contact-icon">
@@ -112,19 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="contact-details">
                             <h3>Phone</h3>
-                            <p>+1 (555) 123-4567</p>
-                            <p>Mon-Fri, 9AM-6PM EST</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Address</h3>
-                            <p>123 Culinary Street</p>
-                            <p>Foodville, FK 12345</p>
+                            <p>+44 151 555 1234</p>
+                            <p>Mon-Fri, 9AM-6PM GMT</p>
                         </div>
                     </div>
                     
@@ -135,55 +151,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="contact-details">
                             <h3>Response Time</h3>
                             <p>We typically respond within 24 hours</p>
-                            <p>Emergency: contact@foodfusion.com</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="faq-preview">
-                    <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
-                    <div class="faq-item">
-                        <h4>How do I reset my password?</h4>
-                        <p>Click "Forgot Password" on the login page or contact support.</p>
+                <div class="social-connect-section">
+                    <h3><i class="fas fa-share-alt"></i> Connect with us</h3>
+                    <div class="social-links-mini">
+                        <a href="#" class="social-link-mini facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link-mini twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link-mini instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
-                    <div class="faq-item">
-                        <h4>Can I submit my own recipes?</h4>
-                        <p>Yes! Registered users can submit recipes through their profile.</p>
-                    </div>
-                    <a href="faq.php" class="view-all-faq">View All FAQs →</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-extra">
-            <div class="social-contact">
-                <h2>Connect With Us</h2>
-                <div class="social-links">
-                    <a href="#" class="social-link facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </a>
-                    <a href="#" class="social-link twitter">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="#" class="social-link instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="#" class="social-link pinterest">
-                        <i class="fab fa-pinterest-p"></i>
-                        <span>Pinterest</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="contact-map">
-                <h2>Find Us</h2>
-                <div class="map-placeholder">
-                    <i class="fas fa-map"></i>
-                    <p>Interactive Map</p>
-                    <small>(Map would be embedded here)</small>
                 </div>
             </div>
         </div>
@@ -193,25 +177,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <style>
 .contact-header {
     text-align: center;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     margin-bottom: 3rem;
+    background: linear-gradient(135deg, #FF6B6B, #53FF61FF);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
 }
 
 .contact-header h1 {
-    color: #333;
     margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .subtitle {
-    color: #666;
-    font-size: 1.1rem;
-    max-width: 600px;
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
     margin: 0 auto;
+    font-weight: 300;
+    letter-spacing: 0.5px;
 }
 
 .contact-content {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 3rem;
     margin-bottom: 3rem;
 }
@@ -224,9 +216,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 .contact-form-section {
     background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.contact-form-section:hover {
+    transform: translateY(-5px);
+}
+
+.form-container {
+    padding: 2.5rem;
+    border-left: 6px solid #FF6B6B;
 }
 
 .contact-form-section h2 {
@@ -234,7 +236,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.contact-form-section h2 i {
+    color: #FF6B6B;
 }
 
 .form-row {
@@ -250,192 +258,257 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-.contact-info-section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.info-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.info-card h2 {
-    color: #333;
+.form-group {
     margin-bottom: 1.5rem;
-    display: flex;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.85rem;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: #FAFAFA;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #FF6B6B;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    color: white;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+.contact-info-section {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.contact-info-section:hover {
+    transform: translateY(-5px);
+}
+
+.info-container {
+    padding: 2.5rem;
 }
 
 .contact-item {
     display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #eee;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #F0F0F0;
+    align-items: flex-start;
 }
 
 .contact-item:last-child {
     border-bottom: none;
 }
 
+.address-item {
+    border-left: 4px solid #4ECDC4;
+    padding-left: 1rem;
+    background: linear-gradient(135deg, #F8F9FA, #FFFFFF);
+    border-radius: 10px;
+    margin: -1.5rem -1.5rem 1.5rem;
+    padding: 1.5rem;
+}
+
 .contact-icon {
-    width: 50px;
-    height: 50px;
-    background: #e74c3c;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
     color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+}
+
+.address-item .contact-icon {
+    background: linear-gradient(135deg, #FFD166, #FFB347);
+}
+
+.contact-details h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.contact-details p {
+    color: #555;
+    margin-bottom: 0.25rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.map-container {
+    margin: 1.5rem -2.5rem;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.map-wrapper {
+    width: 100%;
+    height: 250px;
+}
+
+.map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.alert-error {
+    background: linear-gradient(135deg, #FFE8E8, #FFD1D1);
+    color: #D32F2F;
+    border-left: 4px solid #D32F2F;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+    color: #2E7D32;
+    border-left: 4px solid #2E7D32;
+}
+
+.social-connect-section {
+    background: linear-gradient(135deg, #6A89CC, #4ABD65FF);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.social-connect-section h3 {
+    color: white;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.social-links-mini {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-link-mini {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.contact-details h3 {
-    margin-bottom: 0.25rem;
-    color: #333;
-    font-size: 1rem;
-}
-
-.contact-details p {
-    color: #666;
-    margin-bottom: 0.25rem;
-    font-size: 0.9rem;
-}
-
-.faq-preview {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.faq-preview h3 {
-    color: #333;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.faq-item {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.faq-item:last-child {
-    border-bottom: none;
-}
-
-.faq-item h4 {
-    color: #555;
-    margin-bottom: 0.25rem;
-    font-size: 0.95rem;
-}
-
-.faq-item p {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.view-all-faq {
-    display: inline-block;
-    margin-top: 1rem;
-    color: #3498db;
+    color: white;
     text-decoration: none;
-    font-weight: 500;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.view-all-faq:hover {
-    text-decoration: underline;
+.social-link-mini:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.contact-extra {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .contact-extra {
-        grid-template-columns: 1fr;
+    .contact-header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .form-container,
+    .info-container {
+        padding: 1.5rem;
+    }
+    
+    .address-item {
+        margin: -1rem -1rem 1rem;
+    }
+    
+    .map-container {
+        margin: 1rem -1.5rem;
     }
 }
 
-.social-contact, .contact-map {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+/* Animation for form elements */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.social-contact h2, .contact-map h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
-    text-align: center;
+.contact-form-section,
+.contact-info-section {
+    animation: fadeInUp 0.6s ease-out;
 }
 
-.social-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-}
-
-.social-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 8px;
-    text-decoration: none;
-    color: white;
-    transition: transform 0.3s;
-}
-
-.social-link:hover {
-    transform: translateY(-3px);
-}
-
-.social-link i {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.social-link span {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.facebook { background: #3b5998; }
-.twitter { background: #1da1f2; }
-.instagram { background: #e4405f; }
-.pinterest { background: #bd081c; }
-
-.map-placeholder {
-    height: 200px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-}
-
-.map-placeholder i {
-    font-size: 3rem;
-    color: #ccc;
-    margin-bottom: 1rem;
-}
-
-.map-placeholder p {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+.contact-info-section {
+    animation-delay: 0.2s;
 }
 </style>
 
@@ -460,15 +533,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Add animation to form inputs
+    const formInputs = document.querySelectorAll('.form-control');
+    formInputs.forEach((input, index) => {
+        input.style.animationDelay = `${index * 0.1}s`;
+        input.classList.add('animate-input');
+    });
+    
     // Social link animations
-    document.querySelectorAll('.social-link').forEach(link => {
+    document.querySelectorAll('.social-link-mini').forEach(link => {
         link.addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            this.style.transform = 'translateY(-3px) scale(1.1)';
         });
         
         link.addEventListener('mouseleave', function() {
-            this.style.boxShadow = 'none';
+            this.style.transform = 'translateY(0) scale(1)';
         });
+    });
+    
+    // Animate contact items on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    // Observe contact items
+    document.querySelectorAll('.contact-item').forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+        observer.observe(item);
     });
 });
 </script>
