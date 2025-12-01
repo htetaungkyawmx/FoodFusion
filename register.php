@@ -17,15 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
     $db = $database->getConnection();
     
-    $first_name = sanitizeInput($_POST['first_name']);
-    $last_name = sanitizeInput($_POST['last_name']);
-    $email = sanitizeInput($_POST['email']);
+    // Sanitize inputs
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     
     // Validation
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
         $error = "All fields are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Please enter a valid email address.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } elseif (strlen($password) < 6) {
@@ -62,27 +65,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Create Account</h2>
         
         <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo $error; ?></div>
+            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
         
         <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
         
         <form method="POST" action="">
             <div class="form-group">
                 <label class="form-label">First Name</label>
-                <input type="text" name="first_name" class="form-control" required>
+                <input type="text" name="first_name" class="form-control" required 
+                       value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Last Name</label>
-                <input type="text" name="last_name" class="form-control" required>
+                <input type="text" name="last_name" class="form-control" required 
+                       value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Email Address</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" required 
+                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             </div>
             
             <div class="form-group">

@@ -17,12 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
     $db = $database->getConnection();
     
-    $email = sanitizeInput($_POST['email']);
+    // Fixed: Use trim() and filter_var() instead of undefined sanitizeInput()
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
     
     // Basic validation
     if (empty($email) || empty($password)) {
         $error = "Please enter both email and password.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Please enter a valid email address.";
     } else {
         // Check user
         $query = "SELECT * FROM users WHERE email = ?";
@@ -49,17 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Login to FoodFusion</h2>
         
         <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo $error; ?></div>
+            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
         
         <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
         
         <form method="POST" action="">
             <div class="form-group">
                 <label class="form-label">Email Address</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" required 
+                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             </div>
             
             <div class="form-group">
