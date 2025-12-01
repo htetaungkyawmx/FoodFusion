@@ -7,7 +7,7 @@ include 'includes/header.php';
     <div class="legal-page">
         <div class="legal-header">
             <h1>Privacy Policy</h1>
-            <p class="last-updated">Last updated: March 1, 2024</p>
+            <p class="last-updated">Last updated: December 1, 2025</p>
         </div>
 
         <div class="legal-content">
