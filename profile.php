@@ -31,9 +31,9 @@ $user_recipes = $recipes_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Handle profile update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $bio = $_POST['bio'];
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $bio = trim($_POST['bio']);
     
     // Update user
     $update_query = "UPDATE users SET first_name = ?, last_name = ?, bio = ? WHERE id = ?";
@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="profile-page">
         <div class="profile-header">
             <div class="profile-avatar">
-                <?php if ($user['profile_image']): ?>
-                    <img src="uploads/profiles/<?php echo $user['profile_image']; ?>" alt="<?php echo htmlspecialchars($user['first_name']); ?>">
+                <?php if (!empty($user['profile_image'])): ?>
+                    <img src="uploads/profiles/<?php echo htmlspecialchars($user['profile_image']); ?>" alt="<?php echo htmlspecialchars($user['first_name']); ?>">
                 <?php else: ?>
                     <div class="avatar-placeholder">
                         <i class="fas fa-user"></i>
@@ -105,14 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h2>Edit Profile</h2>
                 
                 <?php if ($success): ?>
-                    <div class="alert alert-success"><?php echo $success; ?></div>
+                    <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
                 <?php endif; ?>
                 
                 <?php if ($error): ?>
-                    <div class="alert alert-error"><?php echo $error; ?></div>
+                    <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
                 <?php endif; ?>
                 
-                <form method="POST" action="" class="profile-form">
+                <form method="POST" action="" class="profile-form" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">First Name</label>
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <div class="form-group">
                         <label class="form-label">Profile Picture</label>
-                        <input type="file" class="form-control" accept="image/*">
+                        <input type="file" name="profile_image" id="profile_image" class="form-control" accept="image/*">
                         <small class="form-text">Max file size: 2MB. Supported formats: JPG, PNG, GIF</small>
                     </div>
                     
@@ -162,14 +162,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php foreach ($user_recipes as $recipe): ?>
                             <div class="recipe-card">
                                 <div class="recipe-image">
-                                    <img src="<?php echo $recipe['featured_image'] ?: 'assets/images/default-recipe.jpg'; ?>" 
-                                         alt="<?php echo htmlspecialchars($recipe['title']); ?>">
+                                    <?php if (!empty($recipe['featured_image'])): ?>
+                                        <img src="<?php echo htmlspecialchars($recipe['featured_image']); ?>" 
+                                             alt="<?php echo htmlspecialchars($recipe['title']); ?>">
+                                    <?php else: ?>
+                                        <img src="assets/images/default-recipe.jpg" 
+                                             alt="<?php echo htmlspecialchars($recipe['title']); ?>">
+                                    <?php endif; ?>
                                 </div>
                                 <div class="recipe-content">
                                     <h3 class="recipe-title"><?php echo htmlspecialchars($recipe['title']); ?></h3>
                                     <div class="recipe-meta">
-                                        <span><i class="fas fa-clock"></i> <?php echo $recipe['cooking_time']; ?> min</span>
-                                        <span><i class="fas fa-fire"></i> <?php echo $recipe['difficulty_level']; ?></span>
+                                        <span><i class="fas fa-clock"></i> <?php echo htmlspecialchars($recipe['cooking_time']); ?> min</span>
+                                        <span><i class="fas fa-fire"></i> <?php echo htmlspecialchars($recipe['difficulty_level']); ?></span>
                                     </div>
                                     <p><?php echo htmlspecialchars(substr($recipe['description'], 0, 100)); ?>...</p>
                                     <div class="recipe-actions">
@@ -241,6 +246,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 
+                <div class="settings-section">
+                    <h3><i class="fas fa-sign-out-alt"></i> Logout</h3>
+                    <p>Ready to leave? Click the button below to securely log out of your account.</p>
+                    <a href="logout.php" class="btn btn-logout" onclick="return confirm('Are you sure you want to logout?')">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+                
                 <div class="settings-section danger-zone">
                     <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
                     <div class="danger-actions">
@@ -257,32 +270,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<script>
-function deleteRecipe(recipeId) {
-    if (confirm('Are you sure you want to delete this recipe? This action cannot be undone.')) {
-        // In a real application, this would make an AJAX request to delete the recipe
-        alert('Recipe deleted! (In a real application, this would delete the recipe from the database)');
-        // Reload the page
-        location.reload();
-    }
-}
-
-function exportData() {
-    alert('Exporting your data...\n\n(In a real application, this would generate and download a file with your data)');
-}
-
-function deleteAccount() {
-    if (confirm('Are you absolutely sure you want to delete your account? This will permanently delete all your data and cannot be undone.')) {
-        if (confirm('This is your last chance to cancel. Click OK to permanently delete your account.')) {
-            alert('Account deletion requested.\n\n(In a real application, this would delete your account from the database)');
-            // Redirect to logout
-            window.location.href = 'logout.php';
-        }
-    }
-}
-</script>
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <span class="modal-close" onclick="closeModal('logoutModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to logout from your account?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal('logoutModal')">Cancel</button>
+            <button class="btn btn-logout" onclick="window.location.href='logout.php'">Yes, Logout</button>
+        </div>
+    </div>
+</div>
 
 <style>
+.profile-page {
+    padding: 20px 0;
+}
+
 .profile-header {
     display: flex;
     align-items: center;
@@ -322,11 +331,13 @@ function deleteAccount() {
 .profile-info h1 {
     margin-bottom: 0.5rem;
     color: #333;
+    font-size: 2rem;
 }
 
 .profile-email {
     color: #666;
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .profile-join-date {
@@ -367,6 +378,7 @@ function deleteAccount() {
 .stat-label {
     color: #666;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .profile-tabs {
@@ -413,6 +425,7 @@ function deleteAccount() {
 .tab-content h2 {
     margin-bottom: 1.5rem;
     color: #333;
+    font-size: 1.8rem;
 }
 
 .profile-form .form-row {
@@ -425,6 +438,15 @@ function deleteAccount() {
 @media (max-width: 576px) {
     .profile-form .form-row {
         grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-tabs {
+        flex-wrap: wrap;
     }
 }
 
@@ -439,6 +461,7 @@ function deleteAccount() {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .recipe-card {
@@ -446,6 +469,11 @@ function deleteAccount() {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
 }
 
 .recipe-image {
@@ -467,6 +495,7 @@ function deleteAccount() {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
     color: #333;
+    font-weight: 600;
 }
 
 .recipe-meta {
@@ -475,6 +504,19 @@ function deleteAccount() {
     color: #666;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+}
+
+.recipe-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.recipe-content p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
 }
 
 .recipe-actions {
@@ -491,10 +533,22 @@ function deleteAccount() {
 .btn-danger {
     background: #e74c3c;
     color: white;
+    border: none;
 }
 
 .btn-danger:hover {
     background: #c0392b;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.btn-outline:hover {
+    background: #e74c3c;
+    color: white;
 }
 
 .empty-state {
@@ -512,10 +566,12 @@ function deleteAccount() {
 .empty-state h3 {
     margin-bottom: 0.5rem;
     color: #333;
+    font-size: 1.5rem;
 }
 
 .empty-state p {
     margin-bottom: 1.5rem;
+    font-size: 1rem;
 }
 
 .settings-section {
@@ -534,6 +590,7 @@ function deleteAccount() {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .password-form {
@@ -551,16 +608,115 @@ function deleteAccount() {
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-logout {
+    background: #6c757d;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-logout:hover {
+    background: #5a6268;
+    color: white;
+}
+
+.btn-logout i {
+    margin-right: 0.5rem;
 }
 
 .danger-zone {
     border-color: #e74c3c;
+    border-style: dashed;
+    border-width: 1px 0 1px 0;
 }
 
 .danger-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+}
+
+.danger-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.modal-close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    color: #666;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
 }
 </style>
 
@@ -572,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            const tabId = this.textContent.toLowerCase().replace(' ', '-');
+            const tabId = this.getAttribute('data-tab');
             
             // Update active tab button
             tabBtns.forEach(b => b.classList.remove('active'));
@@ -588,13 +744,171 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Handle form submissions
+    // Handle password form submission
     document.querySelector('.password-form').addEventListener('submit', function(e) {
         e.preventDefault();
+        const currentPass = this.querySelector('input[type="password"]:nth-of-type(1)').value;
+        const newPass = this.querySelector('input[type="password"]:nth-of-type(2)').value;
+        const confirmPass = this.querySelector('input[type="password"]:nth-of-type(3)').value;
+        
+        if (newPass !== confirmPass) {
+            alert('New password and confirmation do not match!');
+            return;
+        }
+        
+        if (newPass.length < 6) {
+            alert('Password must be at least 6 characters long!');
+            return;
+        }
+        
+        // In a real app, you would send this to the server via AJAX
         alert('Password updated successfully!');
         this.reset();
     });
+    
+    // Profile image preview
+    const profileImageInput = document.getElementById('profile_image');
+    if (profileImageInput) {
+        profileImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                    alert('File size must be less than 2MB');
+                    this.value = '';
+                    return;
+                }
+                
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Only JPG, PNG, and GIF files are allowed');
+                    this.value = '';
+                    return;
+                }
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    
+                    const avatarContainer = document.querySelector('.profile-avatar');
+                    avatarContainer.innerHTML = '';
+                    avatarContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 });
+
+function deleteRecipe(recipeId) {
+    if (confirm('Are you sure you want to delete this recipe? This action cannot be undone.')) {
+        // In a real application, this would make an AJAX request to delete the recipe
+        // For now, we'll simulate it with an alert
+        alert('Recipe deleted! (In a real application, this would delete the recipe from the database)');
+        
+        // Find and remove the recipe card
+        const recipeCard = document.querySelector(`.recipe-card button[onclick="deleteRecipe(${recipeId})"]`).closest('.recipe-card');
+        if (recipeCard) {
+            recipeCard.style.opacity = '0.5';
+            recipeCard.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                recipeCard.remove();
+                // Update recipe count
+                const recipeCount = document.querySelector('.stat-card:first-child .stat-number');
+                if (recipeCount) {
+                    const currentCount = parseInt(recipeCount.textContent) - 1;
+                    recipeCount.textContent = currentCount;
+                    
+                    // Show empty state if no recipes left
+                    if (currentCount === 0) {
+                        const recipesGrid = document.querySelector('#my-recipes .recipes-grid');
+                        if (recipesGrid) {
+                            const emptyState = document.createElement('div');
+                            emptyState.className = 'empty-state';
+                            emptyState.innerHTML = `
+                                <i class="fas fa-utensils"></i>
+                                <h3>No Recipes Yet</h3>
+                                <p>You haven't created any recipes yet. Share your first recipe!</p>
+                                <a href="add-recipe.php" class="btn">Create Your First Recipe</a>
+                            `;
+                            recipesGrid.parentNode.replaceChild(emptyState, recipesGrid);
+                        }
+                    }
+                }
+            }, 300);
+        }
+    }
+}
+
+function exportData() {
+    if (confirm('This will export all your data as a JSON file. Continue?')) {
+        alert('Exporting your data...\n\n(In a real application, this would generate and download a file with your data)');
+    }
+}
+
+function deleteAccount() {
+    if (confirm('WARNING: This will permanently delete your account and all associated data!\n\nThis action cannot be undone. Are you sure?')) {
+        if (prompt('Type "DELETE" to confirm account deletion:') === 'DELETE') {
+            alert('Account deletion requested.\n\n(In a real application, this would delete your account from the database)');
+            // Redirect to logout
+            window.location.href = 'logout.php';
+        }
+    }
+}
+
+// Modal functions
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Logout with modal confirmation (alternative)
+function logoutWithModal() {
+    openModal('logoutModal');
+    return false;
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+}
+
+// Check if user wants to leave the page
+window.onbeforeunload = function(e) {
+    // Only warn if there's unsaved changes in the profile form
+    const form = document.querySelector('.profile-form');
+    if (form) {
+        const originalData = {
+            first_name: '<?php echo addslashes($user["first_name"]); ?>',
+            last_name: '<?php echo addslashes($user["last_name"]); ?>',
+            bio: '<?php echo addslashes($user["bio"] ?? ""); ?>'
+        };
+        
+        const currentData = {
+            first_name: form.querySelector('[name="first_name"]').value,
+            last_name: form.querySelector('[name="last_name"]').value,
+            bio: form.querySelector('[name="bio"]').value
+        };
+        
+        const hasChanges = JSON.stringify(originalData) !== JSON.stringify(currentData);
+        
+        if (hasChanges) {
+            e.preventDefault();
+            e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+            return 'You have unsaved changes. Are you sure you want to leave?';
+        }
+    }
+};
 </script>
 
 <?php include 'includes/footer.php'; ?>
