@@ -1,15 +1,17 @@
 <?php
-// includes/header.php ရဲ့အစမှာ
+// includes/header.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$page_title = $page_title ?? 'FoodFusion';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) . ' - FoodFusion' : 'FoodFusion'; ?></title>
+    <title><?php echo htmlspecialchars($page_title); ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -160,7 +162,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <li class="user-menu">
                         <a href="profile.php">
                             <i class="fas fa-user"></i>
-                            <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                            <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Profile'); ?>
                         </a>
                     </li>
                 <?php else: ?>
