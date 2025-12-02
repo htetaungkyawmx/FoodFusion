@@ -55,6 +55,50 @@ $total_users = countUsers();
     </div>
 </section>
 
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose FoodFusion?</h2>
+            <p>Everything you need for your culinary journey</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>Recipe Collection</h3>
+                <p>Thousands of recipes from different cuisines and skill levels</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Food Community</h3>
+                <p>Connect with food lovers, share tips, and get inspired</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Easy to Follow</h3>
+                <p>Step-by-step instructions with clear measurements</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Friendly</h3>
+                <p>Access recipes anywhere, anytime on any device</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Featured Recipes -->
 <section class="featured-section">
     <div class="container">
@@ -119,63 +163,7 @@ $total_users = countUsers();
                 </div>
                 <?php endforeach; ?>
             </div>
-        <?php else: ?>
-            <div class="no-recipes">
-                <div class="empty-icon">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <h3>No Featured Recipes Yet</h3>
-                <p>Be the first to add an amazing recipe!</p>
-                <a href="add-recipe.php" class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Add Your Recipe
-                </a>
-            </div>
         <?php endif; ?>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section class="features-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Why Choose FoodFusion?</h2>
-            <p>Everything you need for your culinary journey</p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3>Recipe Collection</h3>
-                <p>Thousands of recipes from different cuisines and skill levels</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Food Community</h3>
-                <p>Connect with food lovers, share tips, and get inspired</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3>Easy to Follow</h3>
-                <p>Step-by-step instructions with clear measurements</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3>Mobile Friendly</h3>
-                <p>Access recipes anywhere, anytime on any device</p>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -501,39 +489,6 @@ $total_users = countUsers();
 .view-btn:hover {
     background: #FF5252;
     gap: 12px;
-}
-
-/* No Recipes */
-.no-recipes {
-    text-align: center;
-    padding: 60px 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.empty-icon {
-    width: 80px;
-    height: 80px;
-    background: #FF6B6B;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
-    margin: 0 auto 20px;
-}
-
-.no-recipes h3 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
-
-.no-recipes p {
-    color: #666;
-    margin-bottom: 20px;
 }
 
 /* Features Section */
