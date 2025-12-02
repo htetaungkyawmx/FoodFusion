@@ -1,10 +1,11 @@
 <?php
-$page_title = "Login - FoodFusion";
-include 'includes/header.php';
-include 'includes/auth.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// If already logged in, redirect to home
-if (isLoggedIn()) {
+$page_title = "Login - FoodFusion";
+
+if (isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
 }
@@ -17,37 +18,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
     $db = $database->getConnection();
     
-    // Fixed: Use trim() and filter_var() instead of undefined sanitizeInput()
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
     
-    // Basic validation
     if (empty($email) || empty($password)) {
         $error = "Please enter both email and password.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Please enter a valid email address.";
     } else {
-        // Check user
+      
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = $db->prepare($query);
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_first_name'] = $user['first_name'];
-        $_SESSION['user_last_name'] = $user['last_name'];
-        $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name']; // Full name
-        $_SESSION['user_email'] = $user['email'];
-    
-        $success = "Login successful!";
-        header('Location: index.php?message=login_success');
-        exit();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_first_name'] = $user['first_name'];
+            $_SESSION['user_last_name'] = $user['last_name'];
+            $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name']; // Full name
+            $_SESSION['user_email'] = $user['email'];
+        
+            header('Location: index.php?message=login_success');
+            exit();
         } else {
             $error = "Invalid email or password.";
         }
     }
 }
+
+include 'includes/header.php';
 ?>
 
 <div class="container main-content">
