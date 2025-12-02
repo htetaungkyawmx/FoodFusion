@@ -13,7 +13,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
         <div class="slider">
             <!-- Slide 1 - Pizza -->
             <div class="slide active">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1200&auto=format&fit=crop&q=80" 
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1400&auto=format&fit=crop&q=80" 
                      alt="Delicious Pizza">
                 <div class="slide-overlay"></div>
                 <div class="slide-content">
@@ -24,7 +24,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
             
             <!-- Slide 2 - Pasta -->
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=1200&auto=format&fit=crop&q=80" 
+                <img src="https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=1400&auto=format&fit=crop&q=80" 
                      alt="Tasty Pasta">
                 <div class="slide-overlay"></div>
                 <div class="slide-content">
@@ -35,7 +35,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
             
             <!-- Slide 3 - Burger -->
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&auto=format&fit=crop&q=80" 
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=80" 
                      alt="Juicy Burger">
                 <div class="slide-overlay"></div>
                 <div class="slide-content">
@@ -46,7 +46,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
             
             <!-- Slide 4 - Sushi -->
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=1200&auto=format&fit=crop&q=80" 
+                <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=1400&auto=format&fit=crop&q=80" 
                      alt="Fresh Sushi">
                 <div class="slide-overlay"></div>
                 <div class="slide-content">
@@ -57,7 +57,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
             
             <!-- Slide 5 - Dessert -->
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=1200&auto=format&fit=crop&q=80" 
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=1400&auto=format&fit=crop&q=80" 
                      alt="Delicious Dessert">
                 <div class="slide-overlay"></div>
                 <div class="slide-content">
@@ -211,7 +211,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
                     Create Free Account
                 </a>
                 <?php else: ?>
-                <a href="add-recipe.php" class="btn btn-outline-light">
+                <a href="contact.php" class="btn btn-outline-light">
                     <i class="fas fa-plus"></i>
                     Share Your Recipe
                 </a>
@@ -222,10 +222,10 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 </section>
 
 <style>
-/* Hero Section with Slider */
+/* Hero Section with Slider - Improved image quality */
 .hero-section {
     position: relative;
-    height: 500px;
+    height: 550px; /* Increased height for better image display */
     overflow: hidden;
     margin-top: -20px;
 }
@@ -249,7 +249,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
 }
 
 .slide.active {
@@ -261,6 +261,9 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     height: 100%;
     object-fit: cover;
     object-position: center;
+    /* Better image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .slide-overlay {
@@ -269,7 +272,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
 }
 
 .slide-content {
@@ -282,25 +285,37 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     width: 90%;
     max-width: 800px;
     z-index: 2;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .slide-content h1 {
-    font-size: 2.8rem;
+    font-size: 3rem; /* Slightly larger */
     margin-bottom: 15px;
     font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .slide-content p {
-    font-size: 1.3rem;
-    opacity: 0.9;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 1.4rem;
+    opacity: 0.95;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* Slider Navigation - Smaller dots */
 .slider-nav {
     position: absolute;
-    bottom: 20px; /* Moved up a bit */
+    bottom: 25px;
     left: 0;
     width: 100%;
     display: flex;
@@ -311,23 +326,110 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 
 .dots {
     display: flex;
-    gap: 8px; /* Reduced gap */
+    gap: 8px;
 }
 
 .dot {
-    width: 8px; /* Smaller dots */
-    height: 8px; /* Smaller dots */
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4); /* Lighter inactive color */
+    background: rgba(255, 255, 255, 0.4);
     cursor: pointer;
-    transition: all 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Added border */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .dot.active {
     background: white;
-    transform: scale(1.3); /* Slightly larger when active */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Added glow effect */
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+/* Features Section - Fixed hover animation */
+.features-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 40px 25px; /* More padding */
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02); /* Better hover effect */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    border-color: #FF6B6B;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: white;
+    font-size: 2rem;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: rotateY(180deg) scale(1.1);
+    background: linear-gradient(135deg, #4ECDC4, #FF6B6B);
+}
+
+.feature-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover h3 {
+    color: #FF6B6B;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover p {
+    color: #555;
 }
 
 /* Card Image */
@@ -335,7 +437,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     width: 100%;
     height: 200px;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.6s ease;
 }
 
 .card-image {
@@ -344,33 +446,23 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     overflow: hidden;
 }
 
-/* Feature card padding */
-.feature-card {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: all 0.3s;
-    border: 1px solid #eee;
-}
-
 /* Keep all other CSS the same as before */
 .section-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .section-header h2 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
 .section-header p {
     color: #666;
     margin-bottom: 20px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .view-all {
@@ -380,13 +472,17 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     color: #FF6B6B;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    padding: 10px 25px;
+    border-radius: 50px;
+    background-color: rgba(255, 107, 107, 0.1);
     transition: all 0.3s;
 }
 
 .view-all:hover {
     gap: 12px;
-    color: #FF5252;
+    background-color: rgba(255, 107, 107, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Featured Recipes */
@@ -398,24 +494,24 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 .recipes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 35px;
 }
 
 .recipe-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .recipe-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .recipe-card:hover .card-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .image-overlay {
@@ -424,47 +520,49 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.1));
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.15));
 }
 
 .difficulty-badge {
     position: absolute;
     top: 15px;
-    left: 15px;
-    padding: 5px 12px;
+    right: 15px;
+    padding: 6px 15px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
     color: white;
     text-transform: uppercase;
+    z-index: 2;
 }
 
-.difficulty-badge.easy { background: #4CAF50; }
-.difficulty-badge.medium { background: #FF9800; }
-.difficulty-badge.hard { background: #F44336; }
+.difficulty-badge.easy { background: linear-gradient(135deg, #4CAF50, #45a049); }
+.difficulty-badge.medium { background: linear-gradient(135deg, #FF9800, #f57c00); }
+.difficulty-badge.hard { background: linear-gradient(135deg, #F44336, #d32f2f); }
 
 .card-content {
-    padding: 20px;
+    padding: 25px;
 }
 
 .recipe-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
     line-height: 1.4;
 }
 
 .recipe-desc {
     color: #666;
     font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 .recipe-meta {
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 25px;
     padding-bottom: 20px;
     border-bottom: 1px solid #eee;
 }
@@ -479,6 +577,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 
 .meta-item i {
     color: #FF6B6B;
+    font-size: 1rem;
 }
 
 .card-footer {
@@ -490,98 +589,85 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 .author {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .author i {
     color: #4ECDC4;
+    font-size: 1.2rem;
 }
 
 .view-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #FF6B6B;
+    background: linear-gradient(135deg, #FF6B6B, #FF5252);
     color: white;
-    padding: 8px 20px;
-    border-radius: 6px;
+    padding: 10px 25px;
+    border-radius: 50px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .view-btn:hover {
-    background: #FF5252;
+    background: linear-gradient(135deg, #FF5252, #FF6B6B);
     gap: 12px;
-}
-
-/* Features Section */
-.features-section {
-    padding: 80px 0;
-    background: white;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.feature-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    color: white;
-    font-size: 1.8rem;
-}
-
-.feature-card h3 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-}
-
-.feature-card p {
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
+    transform: translateX(5px);
 }
 
 /* CTA Section */
 .cta-section {
     background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
     color: white;
-    padding: 80px 0;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80') center/cover;
+    opacity: 0.1;
+    z-index: 0;
 }
 
 .cta-content {
     text-align: center;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .cta-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .cta-content p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 30px;
+    font-size: 1.3rem;
+    opacity: 0.95;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .cta-actions {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -589,50 +675,69 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 .btn-light {
     background: white;
     color: #FF6B6B;
-    padding: 15px 30px;
-    border-radius: 8px;
+    padding: 16px 35px;
+    border-radius: 50px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    transition: all 0.3s;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
 }
 
 .btn-light:hover {
     background: #f8f9fa;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-light {
     background: transparent;
     color: white;
-    border: 2px solid white;
-    padding: 13px 30px;
-    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    padding: 14px 35px;
+    border-radius: 50px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    transition: all 0.3s;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
 .btn-outline-light:hover {
     background: white;
     color: #FF6B6B;
-    transform: translateY(-2px);
+    transform: translateY(-5px) scale(1.05);
+    border-color: white;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .hero-section {
-        height: 400px;
+        height: 500px;
     }
     
     .slide-content h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
+    }
+    
+    .slide-content p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 450px;
+    }
+    
+    .slide-content h1 {
+        font-size: 2rem;
     }
     
     .slide-content p {
@@ -645,21 +750,36 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     
     .recipes-grid {
         grid-template-columns: 1fr;
+        gap: 30px;
     }
     
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .feature-card {
+        padding: 30px 20px;
     }
     
     .cta-actions {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
     
     .cta-actions .btn {
         width: 100%;
         max-width: 300px;
         justify-content: center;
+    }
+    
+    .cta-content h2 {
+        font-size: 2.2rem;
+    }
+    
+    .cta-content p {
+        font-size: 1.1rem;
     }
     
     .dots {
@@ -674,7 +794,7 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
 
 @media (max-width: 480px) {
     .hero-section {
-        height: 350px;
+        height: 400px;
     }
     
     .slide-content h1 {
@@ -694,7 +814,17 @@ $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
     }
     
     .slider-nav {
-        bottom: 15px;
+        bottom: 20px;
+    }
+    
+    .feature-card {
+        padding: 25px 15px;
+    }
+    
+    .feature-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 1.6rem;
     }
 }
 </style>
@@ -716,6 +846,13 @@ document.addEventListener('DOMContentLoaded', function() {
         slides[index].classList.add('active');
         dots[index].classList.add('active');
         currentSlide = index;
+        
+        // Add animation to slide content
+        const activeSlideContent = slides[index].querySelector('.slide-content');
+        activeSlideContent.style.animation = 'none';
+        setTimeout(() => {
+            activeSlideContent.style.animation = 'fadeInUp 0.8s ease-out';
+        }, 10);
     }
     
     // Next slide
@@ -747,11 +884,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover animations for recipe cards
     document.querySelectorAll('.recipe-card').forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
+            this.style.transform = 'translateY(-12px) scale(1.02)';
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add hover animations for feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-12px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
         });
     });
     
