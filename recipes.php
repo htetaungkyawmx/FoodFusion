@@ -43,7 +43,7 @@ try {
     <?php if (count($recipes) > 0): ?>
         <div class="recipes-grid">
             <?php foreach ($recipes as $recipe): ?>
-            <a href="recipe-detail.php?id=<?php echo $recipe['id']; ?>" class="recipe-card">
+            <div class="recipe-card"> <!-- Changed from <a> to <div> -->
                 <div class="recipe-image">
                     <?php if (!empty($recipe['featured_image'])): ?>
                         <img src="<?php echo htmlspecialchars($recipe['featured_image']); ?>" 
@@ -81,7 +81,7 @@ try {
                         <?php echo htmlspecialchars($recipe['first_name'] ?? 'Chef'); ?>
                     </div>
                 </div>
-            </a>
+            </div> <!-- End of recipe-card div -->
             <?php endforeach; ?>
         </div>
         
@@ -328,14 +328,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add click animation
+    // Remove click animation since cards are no longer clickable
     document.querySelectorAll('.recipe-card').forEach(card => {
-        card.addEventListener('click', function() {
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = 'translateY(-8px)';
-            }, 200);
-        });
+        card.style.cursor = 'default';
     });
 });
 </script>
