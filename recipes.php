@@ -13,7 +13,7 @@ try {
               FROM recipes r 
               LEFT JOIN users u ON r.user_id = u.id 
               ORDER BY r.created_at DESC 
-              LIMIT 9"; // 3x3 grid အတွက် 9 ခုပဲပြ
+              LIMIT 9"; 
 
     $stmt = $db->prepare($query);
     $stmt->execute();
@@ -33,7 +33,7 @@ try {
 ?>
 
 <div class="container">
-    <!-- Simple Header -->
+    <!-- Updated Header -->
     <div class="recipes-header">
         <h1>Delicious Recipes</h1>
         <p>Discover amazing recipes from our community</p>
@@ -101,30 +101,34 @@ try {
 </div>
 
 <style>
-/* Recipes Page Styles */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
+/* Updated Header - Resource page style */
 .recipes-header {
     text-align: center;
-    padding: 40px 0 30px;
-    margin-bottom: 30px;
+    padding: 2.5rem 0;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, #DA6BFFFF, #FFFC53FF);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    margin-top: 20px;
 }
 
 .recipes-header h1 {
-    color: #333;
-    font-size: 2.2rem;
-    margin-bottom: 10px;
+    color: white;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
     font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .recipes-header p {
-    color: #666;
-    font-size: 1.1rem;
+    color: rgba(255,255,255,0.95);
+    font-size: 1.3rem;
     margin-bottom: 0;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 /* Recipes Grid - 3 columns */
@@ -295,16 +299,24 @@ try {
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for header only */
 @media (max-width: 768px) {
     .recipes-header {
-        padding: 30px 0 20px;
+        padding: 30px 15px;
+        margin: 10px 0 20px 0;
+        border-radius: 10px;
     }
     
     .recipes-header h1 {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
     }
     
+    .recipes-header p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    /* Original responsive styles for other elements */
     .recipe-content h3 {
         font-size: 1.2rem;
     }
