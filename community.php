@@ -73,12 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
                     <h3><i class="fas fa-comments"></i> Join the Conversation</h3>
                     <p>Become part of our growing food community to share recipes, ask questions, and connect with other food lovers.</p>
                     <div class="join-actions">
-                        <a href="register.php" class="btn-register">
-                            <i class="fas fa-user-plus"></i> Create Free Account
-                        </a>
-                        <a href="login.php" class="btn-login">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </a>
+                        <!-- Login and register links removed -->
                     </div>
                 </div>
             </div>
@@ -355,42 +350,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     flex-wrap: wrap;
 }
 
-.btn-register, .btn-login {
-    padding: 0.9rem 2rem;
-    border-radius: 10px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    transition: all 0.3s;
-}
-
-.btn-register {
-    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-    color: white;
-    border: none;
-}
-
-.btn-register:hover {
-    background: linear-gradient(135deg, #FF8E53, #FF6B6B);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
-}
-
-.btn-login {
-    background: white;
-    color: #FF6B6B;
-    border: 2px solid #FF6B6B;
-}
-
-.btn-login:hover {
-    background: #FF6B6B;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.2);
-}
-
 .community-features {
     margin-bottom: 3rem;
 }
@@ -593,15 +552,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     
     .guidelines-content {
         grid-template-columns: 1fr;
-    }
-    
-    .join-actions {
-        flex-direction: column;
-    }
-    
-    .join-actions a {
-        width: 100%;
-        justify-content: center;
     }
 }
 </style>
