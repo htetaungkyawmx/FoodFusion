@@ -4,52 +4,77 @@ include 'includes/header.php';
 include 'includes/functions.php';
 
 $featured_recipes = getFeaturedRecipes(6); // Get 6 featured recipes
-$total_recipes = countRecipes();
-$total_users = countUsers();
 ?>
 
-<!-- Hero Section -->
+<!-- Hero Section with Slider -->
 <section class="hero-section">
-    <div class="hero-overlay">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to FoodFusion</h1>
-            <p class="hero-subtitle">Discover, Share, and Enjoy Amazing Recipes from Around the World</p>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <i class="fas fa-utensils"></i>
-                    <div>
-                        <h3><?php echo number_format($total_recipes); ?>+</h3>
-                        <p>Recipes</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <div>
-                        <h3><?php echo number_format($total_users); ?>+</h3>
-                        <p>Food Lovers</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe"></i>
-                    <div>
-                        <h3>50+</h3>
-                        <p>Cuisines</p>
-                    </div>
+    <!-- Slider -->
+    <div class="slider-container">
+        <div class="slider">
+            <!-- Slide 1 - Pizza -->
+            <div class="slide active">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1200&auto=format&fit=crop&q=80" 
+                     alt="Delicious Pizza">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h1>Welcome to FoodFusion</h1>
+                    <p>Discover Amazing Recipes from Around the World</p>
                 </div>
             </div>
             
-            <div class="hero-actions">
-                <a href="recipes.php" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                    Explore Recipes
-                </a>
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                <a href="register.php" class="btn btn-secondary">
-                    <i class="fas fa-user-plus"></i>
-                    Join Free
-                </a>
-                <?php endif; ?>
+            <!-- Slide 2 - Pasta -->
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=1200&auto=format&fit=crop&q=80" 
+                     alt="Tasty Pasta">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h1>Italian Delights</h1>
+                    <p>Authentic pasta recipes for every occasion</p>
+                </div>
+            </div>
+            
+            <!-- Slide 3 - Burger -->
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&auto=format&fit=crop&q=80" 
+                     alt="Juicy Burger">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h1>Burger Paradise</h1>
+                    <p>Create perfect burgers at home</p>
+                </div>
+            </div>
+            
+            <!-- Slide 4 - Sushi -->
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=1200&auto=format&fit=crop&q=80" 
+                     alt="Fresh Sushi">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h1>Asian Cuisine</h1>
+                    <p>Explore authentic Asian recipes</p>
+                </div>
+            </div>
+            
+            <!-- Slide 5 - Dessert -->
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=1200&auto=format&fit=crop&q=80" 
+                     alt="Delicious Dessert">
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <h1>Sweet Treats</h1>
+                    <p>Indulge in heavenly desserts</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slider Navigation -->
+        <div class="slider-nav">
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </div>
     </div>
@@ -116,7 +141,7 @@ $total_users = countUsers();
                 <?php foreach ($featured_recipes as $recipe): ?>
                 <div class="recipe-card">
                     <div class="card-image">
-                        <img src="<?php echo !empty($recipe['featured_image']) ? htmlspecialchars($recipe['featured_image']) : 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&auto=format&fit=crop'; ?>" 
+                        <img src="<?php echo !empty($recipe['featured_image']) ? htmlspecialchars($recipe['featured_image']) : 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=600&auto=format&fit=crop&q=80'; ?>" 
                              alt="<?php echo htmlspecialchars($recipe['title']); ?>">
                         <div class="image-overlay"></div>
                         
@@ -197,125 +222,140 @@ $total_users = countUsers();
 </section>
 
 <style>
-/* Hero Section */
+/* Hero Section with Slider */
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&auto=format&fit=crop');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 100px 0 80px;
+    position: relative;
+    height: 500px;
+    overflow: hidden;
     margin-top: -20px;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slider {
+    width: 100%;
+    height: 100%;
     position: relative;
 }
 
-.hero-overlay {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
-.hero-content {
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+}
+
+.slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
+    color: white;
+    width: 90%;
+    max-width: 800px;
+    z-index: 2;
 }
 
-.hero-title {
-    font-size: 3rem;
+.slide-content h1 {
+    font-size: 2.8rem;
     margin-bottom: 15px;
     font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero-subtitle {
-    font-size: 1.2rem;
+.slide-content p {
+    font-size: 1.3rem;
     opacity: 0.9;
-    margin-bottom: 40px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.hero-stats {
+/* Slider Navigation - Smaller dots */
+.slider-nav {
+    position: absolute;
+    bottom: 20px; /* Moved up a bit */
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
-    gap: 40px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
+    align-items: center;
+    z-index: 3;
 }
 
-.stat-item {
+.dots {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 8px; /* Reduced gap */
 }
 
-.stat-item i {
-    font-size: 2rem;
-    color: #FF6B6B;
-}
-
-.stat-item h3 {
-    font-size: 2rem;
-    margin: 0;
-    font-weight: 700;
-}
-
-.stat-item p {
-    margin: 0;
-    opacity: 0.8;
-    font-size: 0.9rem;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.btn-primary {
-    background: #FF6B6B;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 8px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
+.dot {
+    width: 8px; /* Smaller dots */
+    height: 8px; /* Smaller dots */
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4); /* Lighter inactive color */
+    cursor: pointer;
     transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Added border */
 }
 
-.btn-primary:hover {
-    background: #FF5252;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+.dot.active {
+    background: white;
+    transform: scale(1.3); /* Slightly larger when active */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Added glow effect */
 }
 
-.btn-secondary {
-    background: #4ECDC4;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 8px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
+/* Card Image */
+.card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+/* Feature card padding */
+.feature-card {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     transition: all 0.3s;
+    border: 1px solid #eee;
 }
 
-.btn-secondary:hover {
-    background: #44b7af;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
-}
-
-/* Section Header */
+/* Keep all other CSS the same as before */
 .section-header {
     text-align: center;
     margin-bottom: 40px;
@@ -372,19 +412,6 @@ $total_users = countUsers();
 .recipe-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.card-image {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
 }
 
 .recipe-card:hover .card-image img {
@@ -503,21 +530,6 @@ $total_users = countUsers();
     gap: 30px;
 }
 
-.feature-card {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: all 0.3s;
-    border: 1px solid #eee;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
 .feature-icon {
     width: 70px;
     height: 70px;
@@ -615,20 +627,20 @@ $total_users = countUsers();
 
 /* Responsive */
 @media (max-width: 768px) {
-    .hero-title {
+    .hero-section {
+        height: 400px;
+    }
+    
+    .slide-content h1 {
         font-size: 2.2rem;
     }
     
-    .hero-stats {
-        gap: 20px;
+    .slide-content p {
+        font-size: 1.1rem;
     }
     
-    .stat-item {
-        padding: 15px;
-    }
-    
-    .stat-item h3 {
-        font-size: 1.5rem;
+    .section-header h2 {
+        font-size: 2rem;
     }
     
     .recipes-grid {
@@ -639,24 +651,100 @@ $total_users = countUsers();
         grid-template-columns: 1fr;
     }
     
-    .hero-actions,
     .cta-actions {
         flex-direction: column;
         align-items: center;
     }
     
-    .hero-actions .btn,
     .cta-actions .btn {
         width: 100%;
         max-width: 300px;
         justify-content: center;
+    }
+    
+    .dots {
+        gap: 6px;
+    }
+    
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        height: 350px;
+    }
+    
+    .slide-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .slide-content p {
+        font-size: 1rem;
+    }
+    
+    .card-image {
+        height: 180px;
+    }
+    
+    .card-image img {
+        height: 180px;
+    }
+    
+    .slider-nav {
+        bottom: 15px;
     }
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Add hover animations
+    // Slider functionality
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    // Function to show slide
+    function showSlide(index) {
+        // Remove active class from all slides and dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Add active class to current slide and dot
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+    
+    // Next slide
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Dot click events
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSlide(index);
+        });
+    });
+    
+    // Auto slide every 2 seconds (2000 milliseconds)
+    let slideInterval = setInterval(nextSlide, 2000);
+    
+    // Pause auto slide on hover
+    const slider = document.querySelector('.slider-container');
+    slider.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    
+    slider.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(nextSlide, 2000);
+    });
+    
+    // Add hover animations for recipe cards
     document.querySelectorAll('.recipe-card').forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-10px)';
@@ -675,22 +763,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 200);
         });
-    });
-    
-    // Add stats counter animation (optional)
-    const statItems = document.querySelectorAll('.stat-item h3');
-    statItems.forEach(stat => {
-        const target = parseInt(stat.textContent);
-        let current = 0;
-        const increment = target / 50;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            stat.textContent = Math.floor(current) + '+';
-        }, 30);
     });
 });
 </script>
