@@ -1,6 +1,21 @@
 <?php
 // includes/functions.php
 
+// Include database configuration
+if (!class_exists('Database')) {
+    include_once __DIR__ . '/../config/database.php';
+}
+
+// Initialize database connection
+function getDBConnection() {
+    static $db = null;
+    if ($db === null) {
+        $database = new Database();
+        $db = $database->getConnection();
+    }
+    return $db;
+}
+
 function sanitizeInput($data) {
     if (is_array($data)) {
         return array_map('sanitizeInput', $data);
@@ -16,12 +31,15 @@ function validateEmail($email) {
 }
 
 function getFeaturedRecipes($limit = 6) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
-        $query = "SELECT * FROM recipes WHERE featured = 1 ORDER BY created_at DESC LIMIT ?";
+        $query = "SELECT r.*, u.first_name, u.last_name 
+                  FROM recipes r 
+                  LEFT JOIN users u ON r.user_id = u.id 
+                  WHERE r.featured = 1 
+                  ORDER BY r.created_at DESC 
+                  LIMIT ?";
         $stmt = $db->prepare($query);
         $stmt->bindParam(1, $limit, PDO::PARAM_INT);
         $stmt->execute();
@@ -33,9 +51,7 @@ function getFeaturedRecipes($limit = 6) {
 }
 
 function getUserRecipes($user_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT * FROM recipes WHERE user_id = ? ORDER BY created_at DESC";
@@ -49,9 +65,7 @@ function getUserRecipes($user_id) {
 }
 
 function getAllRecipes($filters = [], $limit = 12) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT r.*, 
@@ -100,9 +114,7 @@ function getAllRecipes($filters = [], $limit = 12) {
 }
 
 function getRecipeById($id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT r.*, 
@@ -205,9 +217,7 @@ function timeAgo($datetime, $full = false) {
 }
 
 function getCategories() {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT DISTINCT category FROM recipes WHERE category IS NOT NULL AND category != '' ORDER BY category";
@@ -221,9 +231,7 @@ function getCategories() {
 }
 
 function getCuisines() {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT DISTINCT cuisine FROM recipes WHERE cuisine IS NOT NULL AND cuisine != '' ORDER BY cuisine";
@@ -241,9 +249,7 @@ function getDifficultyLevels() {
 }
 
 function getRecipeCount() {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT COUNT(*) as count FROM recipes";
@@ -258,9 +264,7 @@ function getRecipeCount() {
 }
 
 function increaseRecipeViews($recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "UPDATE recipes SET views = views + 1 WHERE id = ?";
@@ -274,9 +278,7 @@ function increaseRecipeViews($recipe_id) {
 }
 
 function saveRecipe($user_id, $recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         // Check if already saved
@@ -305,9 +307,7 @@ function saveRecipe($user_id, $recipe_id) {
 }
 
 function isRecipeSaved($user_id, $recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT COUNT(*) as count FROM saved_recipes WHERE user_id = ? AND recipe_id = ?";
@@ -322,9 +322,7 @@ function isRecipeSaved($user_id, $recipe_id) {
 }
 
 function getUserSavedRecipes($user_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT r.*, 
@@ -347,9 +345,7 @@ function getUserSavedRecipes($user_id) {
 }
 
 function likeRecipe($user_id, $recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         // Check if already liked
@@ -378,9 +374,7 @@ function likeRecipe($user_id, $recipe_id) {
 }
 
 function getRecipeLikesCount($recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT COUNT(*) as count FROM recipe_likes WHERE recipe_id = ?";
@@ -395,9 +389,7 @@ function getRecipeLikesCount($recipe_id) {
 }
 
 function isRecipeLiked($user_id, $recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT COUNT(*) as count FROM recipe_likes WHERE user_id = ? AND recipe_id = ?";
@@ -412,9 +404,7 @@ function isRecipeLiked($user_id, $recipe_id) {
 }
 
 function addRecipeComment($user_id, $recipe_id, $comment, $parent_id = null) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "INSERT INTO recipe_comments (recipe_id, user_id, parent_id, comment, created_at) 
@@ -429,9 +419,7 @@ function addRecipeComment($user_id, $recipe_id, $comment, $parent_id = null) {
 }
 
 function getRecipeComments($recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT c.*, 
@@ -471,9 +459,7 @@ function getRecipeComments($recipe_id) {
 }
 
 function getRecipeCommentCount($recipe_id) {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
+    $db = getDBConnection();
     
     try {
         $query = "SELECT COUNT(*) as count FROM recipe_comments WHERE recipe_id = ?";
@@ -483,6 +469,36 @@ function getRecipeCommentCount($recipe_id) {
         return $result['count'] ?? 0;
     } catch (PDOException $e) {
         error_log("Database error in getRecipeCommentCount: " . $e->getMessage());
+        return 0;
+    }
+}
+
+function countRecipes() {
+    $db = getDBConnection();
+    
+    try {
+        $query = "SELECT COUNT(*) as total FROM recipes";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Database error in countRecipes: " . $e->getMessage());
+        return 0;
+    }
+}
+
+function countUsers() {
+    $db = getDBConnection();
+    
+    try {
+        $query = "SELECT COUNT(*) as total FROM users";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        error_log("Database error in countUsers: " . $e->getMessage());
         return 0;
     }
 }
