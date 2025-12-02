@@ -15,10 +15,127 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Temporary fix - remove any problematic CSS */
+        /* Header Styles - Only changed logo colors */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        /* Updated Logo Styles - FoodFusion text in dark, icon in green */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333; /* Dark color for FoodFusion text */
+        }
+
+        .logo i {
+            color: #4CAF50; /* Green color for icon */
+        }
+
+        .logo span {
+            color: #333; /* Dark color for FoodFusion text */
+        }
+
+        .logo:hover {
+            color: #4CAF50; /* Green on hover */
+        }
+
+        .logo:hover span {
+            color: #4CAF50; /* Green on hover */
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
         .nav-links a {
-            cursor: pointer !important;
-            pointer-events: auto !important;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4CAF50; /* Green on hover */
+        }
+
+        .btn-login {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #4CAF50; /* Green border */
+            border-radius: 5px;
+            color: #4CAF50; /* Green text */
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: #4CAF50; /* Green background on hover */
+            color: white;
+        }
+
+        .btn-register {
+            padding: 0.5rem 1.5rem;
+            background: #4CAF50; /* Green background */
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #45a049; /* Darker green on hover */
+        }
+
+        /* Mobile Navigation */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 2px 0;
+            transition: 0.3s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background: white;
+                padding: 2rem;
+                transition: 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
         }
     </style>
 </head>
@@ -47,8 +164,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </a>
                     </li>
                 <?php else: ?>
-                    <li><a href="login.php" class="btn-login" onclick="return true;">Login</a></li>
-                    <li><a href="register.php" class="btn-register" onclick="return true;">Register</a></li>
+                    <li><a href="login.php" class="btn-login">Login</a></li>
+                    <li><a href="register.php" class="btn-register">Register</a></li>
                 <?php endif; ?>
             </ul>
             
@@ -81,4 +198,3 @@ if (session_status() === PHP_SESSION_NONE) {
         });
     });
     </script>
-    
