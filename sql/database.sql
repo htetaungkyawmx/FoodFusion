@@ -1,5 +1,3 @@
--- FoodFusion Database Schema
-
 -- Users table
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,12 +40,22 @@ CREATE TABLE categories (
     description TEXT
 );
 
--- Community Posts table
+-- Recipe Categories (Junction Table)
+CREATE TABLE recipe_categories (
+    recipe_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (recipe_id, category_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+
+-- Community Cookbook Posts table
 CREATE TABLE community_posts (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     title VARCHAR(200) NOT NULL,
     content TEXT NOT NULL,
+    category VARCHAR(50),
     post_type VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -65,13 +73,14 @@ CREATE TABLE recipe_reviews (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Resources table
+-- Culinary & Educational Resources table
 CREATE TABLE resources (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(200) NOT NULL,
     description TEXT,
-    resource_type VARCHAR(50),
+    resource_type VARCHAR(50), -- e.g., 'recipe_card', 'tutorial', 'video', 'infographic'
     file_path VARCHAR(255),
+    download_count INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

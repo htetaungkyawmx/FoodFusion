@@ -1,4 +1,5 @@
 <?php
+ob_start(); 
 $page_title = "Community - FoodFusion";
 include 'includes/header.php';
 include 'config/database.php';
